@@ -25,8 +25,6 @@
   --believe-card-green: #eefaf3;
   --believe-card-peach: #fff5f7;
   --believe-card-blue: #eef6fc;
-  --we-believe-pad-y: clamp(1.5rem, 3vw, 2.25rem);
-
   --panel-cream: #faf7f2;
   --panel-lavender: #f3effa;
   --panel-sky: #f2f6fb;
@@ -36,17 +34,16 @@
   --approach-arrow-width: clamp(20px, 2.2vw, 32px);
   --approach-steps-offset-top: 30px;
 
-  --compare-left-bg: #f6fafd;
-  --compare-right-bg: #f9fbf8;
+  --compare-left-bg: #feedf3;
+  --compare-right-bg: #f1f9ed;
   --compare-bar-radius: 22px;
-  --compare-bar-height: clamp(220px, 22vw, 270px);
   --compare-vs-size: 52px;
   --compare-vs-gap: 22px;
   --compare-vs-clearance: calc(var(--compare-vs-size) / 2 + var(--compare-vs-gap));
-  --compare-photo-share: 48%;
+  --compare-right-text-pad-extra: 14px;
+  --compare-photo-share: 44%;
   --role-heart-size: clamp(22px, 2.2vw, 30px);
   --role-callout-heart-size: clamp(28px, 2.8vw, 38px);
-  --about-panels-pad-y: clamp(1.5rem, 3vw, 2.25rem);
   --panel-bg-size: cover;
   --panel-bg-position: right center;
   --panel-council-figure-width: 250px;
@@ -59,8 +56,9 @@
   --card-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
   --section-pad-y: 90px;
-  --main-section-pad-y: 0;
+  --main-section-gap-y: clamp(1.5rem, 3vw, 2.25rem);
   --announce-pad-y: 8px;
+  --announce-text-color: #fff;
   --header-pad-y: 10px;
   --hero-pad-y: 0;
   --about-hero-pad-top: 30px;
@@ -146,16 +144,25 @@ button {
 }
 
 .section-padding {
-  padding-top: var(--section-pad-y);
+  padding-top: 0;
   padding-bottom: var(--section-pad-y);
 }
 
-/* Main page sections — flush stack, no outer top/bottom gap */
+/* Main page sections — single-side gap so stacked sections don't double up */
 #main-content > section {
-  padding-top: var(--main-section-pad-y);
-  padding-bottom: var(--main-section-pad-y);
+  padding-top: 0;
+  padding-bottom: var(--main-section-gap-y);
   margin-top: 0;
   margin-bottom: 0;
+}
+
+#main-content > section.page-hero {
+  padding-top: var(--hero-pad-y);
+  padding-bottom: var(--main-section-gap-y);
+}
+
+#main-content > section.about-hero {
+  padding-top: var(--about-hero-pad-top);
 }
 
 .card-shadow {
@@ -271,7 +278,7 @@ button {
 /* ——— Announcement bar ——— */
 .announce-bar {
   background-color: var(--color-pink);
-  color: var(--color-navy);
+  color: var(--announce-text-color);
 }
 
 .announce-bar__inner {
@@ -295,7 +302,7 @@ button {
 
 .announce-bar__heart {
   display: inline-flex;
-  color: var(--color-navy);
+  color: var(--announce-text-color);
   flex-shrink: 0;
 }
 
@@ -348,7 +355,7 @@ button {
 
 .site-header__logo img {
   width: auto;
-  height: 56px;
+  height: 64px;
   object-fit: contain;
 }
 
@@ -571,8 +578,6 @@ button {
 /* ——— About hero ——— */
 .about-hero {
   background-color: #fff;
-  padding-top: var(--about-hero-pad-top);
-  padding-bottom: 0;
   min-height: 0;
 }
 
@@ -677,8 +682,6 @@ button {
 /* ——— Our Story (about page) ——— */
 .our-story {
   background-color: #fff;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 .our-story__card {
@@ -782,11 +785,6 @@ button {
 /* ——— We Believe (about page) ——— */
 .we-believe {
   background-color: #fff;
-}
-
-.we-believe__inner {
-  padding-top: var(--we-believe-pad-y);
-  padding-bottom: var(--we-believe-pad-y);
 }
 
 .we-believe__title {
@@ -902,11 +900,6 @@ button {
 /* ——— About panels (journey + council) ——— */
 .about-panels {
   background-color: #fff;
-}
-
-.about-panels__inner {
-  padding-top: var(--about-panels-pad-y);
-  padding-bottom: var(--about-panels-pad-y);
 }
 
 .about-panels__grid {
@@ -1243,11 +1236,6 @@ button {
   background-color: #fff;
 }
 
-.compare-different__wrap {
-  padding-top: clamp(1rem, 2vw, 1.5rem);
-  padding-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
 .compare-different__title {
   display: flex;
   align-items: center;
@@ -1274,7 +1262,6 @@ button {
   position: relative;
   display: flex;
   align-items: stretch;
-  min-height: var(--compare-bar-height);
   overflow: visible;
 }
 
@@ -1300,11 +1287,10 @@ button {
   flex: 0 0 var(--compare-photo-share);
   width: var(--compare-photo-share);
   max-width: var(--compare-photo-share);
-  height: var(--compare-bar-height);
-  min-height: var(--compare-bar-height);
   align-self: stretch;
-  object-fit: cover;
-  background-color: inherit;
+  height: 100%;
+  min-height: 100%;
+   
   display: block;
 }
 
@@ -1332,7 +1318,7 @@ button {
 }
 
 .compare-side--right .compare-side__text {
-  padding-left: var(--compare-vs-clearance);
+  padding-left: calc(var(--compare-vs-clearance) + var(--compare-right-text-pad-extra));
   padding-right: clamp(0.5rem, 0.9vw, 0.75rem);
 }
 
@@ -1598,6 +1584,7 @@ button {
   :root {
     --container-padding: 32px;
     --section-pad-y: 64px;
+    --main-section-gap-y: 1.25rem;
   }
 
   .site-nav,
@@ -1690,14 +1677,6 @@ button {
     --our-story-card-pad-bottom: 1rem;
     --our-story-card-pad-left: 0.9rem;
     --our-story-card-pad-right: 0.9rem;
-  }
-
-  .we-believe__inner {
-    --we-believe-pad-y: 1.25rem;
-  }
-
-  .about-panels__inner {
-    --about-panels-pad-y: 1.25rem;
   }
 
   .we-believe__title {
@@ -1856,12 +1835,7 @@ button {
   .compare-side {
     flex-direction: column;
     border-radius: var(--compare-bar-radius);
-    min-height: 0;
-  }
-
-  .compare-side--left,
-  .compare-side--right {
-    border-radius: var(--compare-bar-radius);
+    overflow: hidden;
   }
 
   .compare-side--right .compare-side__photo {
@@ -1872,9 +1846,9 @@ button {
     flex: none;
     width: 100%;
     max-width: 100%;
-    height: auto;
-    min-height: 0;
     max-height: 200px;
+    min-height: 0;
+    height: auto;
     object-fit: cover;
   }
 
@@ -1901,6 +1875,7 @@ button {
   :root {
     --container-padding: 20px;
     --section-pad-y: 48px;
+    --main-section-gap-y: 1rem;
     --announce-pad-y: 10px;
     --header-pad-y: 8px;
   }
