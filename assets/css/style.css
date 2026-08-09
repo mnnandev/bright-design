@@ -76,8 +76,8 @@
   --contact-form-pad-y: 0;
   --contact-form-radius: 18px;
   --contact-form-aside-bg: var(--panel-lavender);
-  --contact-form-aside-width: 32%;
-  --contact-form-deco-fit: cover;
+  --contact-form-aside-width: 34%;
+  --contact-form-deco-fit: contain;
   --contact-form-deco-position: center center;
   --contact-form-wrap-pad: 0;
   --contact-form-wrap-gap: clamp(0.55rem, 1vw, 0.75rem);
@@ -861,6 +861,7 @@ button {
   width: 100%;
   max-width: none;
   height: 100%;
+  max-height: none;
   object-fit: var(--contact-form-deco-fit);
   object-position: var(--contact-form-deco-position);
   pointer-events: none;
@@ -1978,9 +1979,9 @@ button {
   .contact-form__aside {
     flex: none;
     width: 100%;
-    min-height: 0;
-    aspect-ratio: 961 / 720;
-    max-height: 460px;
+    min-height: clamp(400px, 72vw, 540px);
+    aspect-ratio: auto;
+    max-height: none;
   }
 
   .contact-form__aside-copy {
