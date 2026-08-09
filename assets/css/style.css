@@ -71,8 +71,8 @@
   --contact-hero-heart-offset-x: clamp(0.35rem, 0.8vw, 0.65rem);
   --contact-hero-copy-max-w: 26.5rem;
   --contact-hero-banner-max-h: min(540px, 65vh);
-  --contact-hero-gap: 0;
-  --contact-hero-media-pull: clamp(-3.5rem, -5.5vw, -1.75rem);
+  --contact-hero-gap: clamp(0.5rem, 1.2vw, 1rem);
+  --contact-hero-media-max-w: min(58%, 920px);
   --heading-underline-left: -2%;
   --heading-underline-width: 105%;
   --heading-underline-bottom: -0.12em;
@@ -705,12 +705,13 @@ button {
 }
 
 .contact-hero__media {
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 0 1 auto;
+  width: var(--contact-hero-media-max-w);
+  max-width: var(--contact-hero-media-max-w);
+  margin-left: auto;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  margin-left: var(--contact-hero-media-pull);
+  justify-content: flex-end;
   margin-right: calc(var(--container-padding) * -0.35);
   animation: rise-in 0.75s ease 0.08s both;
 }
@@ -785,13 +786,13 @@ button {
 }
 
 .contact-hero__banner {
-  width: 112%;
+  width: 100%;
   max-width: none;
   height: auto;
   max-height: var(--contact-hero-banner-max-h);
   min-height: 0;
   object-fit: contain;
-  object-position: left center;
+  object-position: right center;
 }
 
 /* ——— Our Story (about page) ——— */
@@ -1659,6 +1660,7 @@ button {
 
   .contact-hero__media {
     width: 100%;
+    max-width: 100%;
     margin-left: 0;
     margin-right: 0;
     justify-content: center;
