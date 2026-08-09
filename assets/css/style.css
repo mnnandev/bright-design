@@ -73,11 +73,11 @@
   --contact-hero-banner-max-h: min(540px, 65vh);
   --contact-hero-gap: clamp(0.5rem, 1.2vw, 1rem);
   --contact-hero-media-max-w: min(58%, 920px);
-  --contact-form-pad-y: clamp(1.75rem, 3.5vw, 3rem);
+  --contact-form-pad-y: 0;
   --contact-form-radius: 18px;
   --contact-form-aside-bg: var(--panel-lavender);
   --contact-form-aside-width: 32%;
-  --contact-form-deco-fit: fill;
+  --contact-form-deco-fit: cover;
   --contact-form-deco-position: center center;
   --contact-form-wrap-pad: 0;
   --contact-form-wrap-gap: clamp(0.55rem, 1vw, 0.75rem);
@@ -848,6 +848,7 @@ button {
   position: relative;
   flex: 0 0 var(--contact-form-aside-width);
   min-width: 0;
+  min-height: 0;
   align-self: stretch;
   background-color: var(--contact-form-aside-bg);
   border-radius: calc(var(--contact-form-radius) - 4px);
@@ -867,14 +868,13 @@ button {
 }
 
 .contact-form__aside-copy {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100%;
-  height: 100%;
-  padding: clamp(2.25rem, 3.8vw, 3.25rem) clamp(1.25rem, 2vw, 1.85rem);
+  padding: clamp(1.35rem, 2.2vw, 2rem) clamp(1.15rem, 1.8vw, 1.65rem);
   text-align: center;
   animation: rise-in 0.65s ease both;
 }
@@ -1978,12 +1978,13 @@ button {
   .contact-form__aside {
     flex: none;
     width: 100%;
-    min-height: clamp(420px, 62vw, 520px);
+    min-height: 0;
+    aspect-ratio: 961 / 720;
+    max-height: 460px;
   }
 
   .contact-form__aside-copy {
-    padding-top: clamp(1.75rem, 4vw, 2.5rem);
-    padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+    padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1rem, 2.5vw, 1.5rem);
   }
 
   .contact-cta__card {
