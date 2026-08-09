@@ -64,15 +64,12 @@
   --header-pad-y: 10px;
   --hero-pad-y: 0;
   --about-hero-pad-top: 30px;
-  --contact-hero-pad-top: 24px;
+  --contact-hero-pad-top: 30px;
   --contact-hero-title-size: clamp(2.75rem, 4.8vw, 4rem);
   --contact-hero-star-size: clamp(24px, 2.6vw, 34px);
   --contact-hero-heart-size: clamp(24px, 2.4vw, 30px);
   --contact-hero-heart-offset-x: clamp(0.35rem, 0.8vw, 0.65rem);
   --contact-hero-copy-max-w: 26.5rem;
-  --contact-hero-banner-max-h: min(540px, 65vh);
-  --contact-hero-gap: clamp(0.5rem, 1.2vw, 1rem);
-  --contact-hero-media-max-w: min(58%, 920px);
   --contact-form-pad-y: 0;
   --contact-form-radius: 18px;
   --contact-form-aside-bg: var(--panel-lavender);
@@ -595,22 +592,31 @@ button {
   margin: 0 0 0.9rem;
 }
 
-/* ——— About hero ——— */
-.about-hero {
+/* ——— About + Contact hero layout ——— */
+.about-hero,
+.contact-hero {
   background-color: #fff;
   padding-top: var(--about-hero-pad-top);
   padding-bottom: 0;
   min-height: 0;
 }
 
-.about-hero .page-hero__inner {
+.contact-hero {
+  padding-top: var(--contact-hero-pad-top);
+  display: block;
+  overflow: visible;
+}
+
+.about-hero .page-hero__inner,
+.contact-hero .page-hero__inner {
   display: grid;
   grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   align-items: center;
   column-gap: 0;
 }
 
-.about-hero .page-hero__content {
+.about-hero .page-hero__content,
+.contact-hero .page-hero__content {
   width: 100%;
   max-width: none;
   padding-right: 0.5rem;
@@ -618,13 +624,27 @@ button {
   grid-row: 1;
 }
 
-.about-hero__media {
+.about-hero__media,
+.contact-hero .about-hero__media {
   grid-column: 2;
   grid-row: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
+}
+
+.about-hero__banner,
+.contact-hero .about-hero__banner {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: min(430px, 60vh);
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+  filter: brightness(1.1);
+  background-color: transparent;
 }
 
 .about-hero__eyebrow {
@@ -668,18 +688,6 @@ button {
   white-space: normal;
 }
 
-/* About banner — centered in right column, respects container padding */
-.about-hero__banner {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  max-height: min(430px, 60vh);
-  min-height: 0;
-  object-fit: contain;
-  object-position: center;
-  filter: brightness(1.1);
-}
-
 /* Yellow brush underline under "Every Child" */
 .heading-underline {
   position: relative;
@@ -701,47 +709,7 @@ button {
   z-index: -1;
 }
 
-/* ——— Contact hero ——— */
-.contact-hero {
-  background-color: #fff;
-  padding-top: var(--contact-hero-pad-top);
-  padding-bottom: 0;
-  min-height: 0;
-  display: block;
-  overflow: visible;
-}
-
-.contact-hero .page-hero__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
-  align-items: center;
-  column-gap: clamp(0.35rem, 1.2vw, 1rem);
-}
-
-.contact-hero .page-hero__content {
-  flex: none;
-  width: 100%;
-  max-width: none;
-  padding-right: 0.5rem;
-  grid-column: 1;
-  grid-row: 1;
-  text-align: left;
-}
-
-.contact-hero__media {
-  grid-column: 2;
-  grid-row: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-width: 0;
-  margin-left: 0;
-  margin-right: calc(var(--container-padding) * -0.35);
-  width: auto;
-  max-width: none;
-  animation: rise-in 0.75s ease 0.08s both;
-}
-
+/* ——— Contact hero content ——— */
 .contact-hero__title {
   font-family: var(--font-heading);
   font-weight: 700;
@@ -810,17 +778,6 @@ button {
 
 .contact-hero__accent--pink {
   color: var(--color-pink);
-}
-
-.contact-hero__banner {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  max-height: var(--contact-hero-banner-max-h);
-  min-height: 0;
-  object-fit: contain;
-  object-position: right center;
-  background-color: transparent;
 }
 
 /* ——— Contact form section ——— */
@@ -1944,17 +1901,20 @@ button {
     font-size: clamp(3rem, 5vw, 4.5rem);
   }
 
-  .about-hero .page-hero__inner {
+  .about-hero .page-hero__inner,
+  .contact-hero .page-hero__inner {
     grid-template-columns: 1fr;
     row-gap: 1.25rem;
   }
 
-  .about-hero .page-hero__content {
+  .about-hero .page-hero__content,
+  .contact-hero .page-hero__content {
     grid-column: 1;
     grid-row: 1;
   }
 
-  .about-hero__media {
+  .about-hero__media,
+  .contact-hero .about-hero__media {
     grid-column: 1;
     grid-row: 2;
     margin-right: 0;
@@ -1962,7 +1922,8 @@ button {
     justify-content: center;
   }
 
-  .about-hero__banner {
+  .about-hero__banner,
+  .contact-hero .about-hero__banner {
     max-height: 360px;
     max-width: 100%;
     object-position: center bottom;
@@ -2109,32 +2070,9 @@ button {
     display: block;
   }
 
-  .contact-hero .page-hero__inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 1.25rem;
-  }
-
   .contact-hero .page-hero__content {
-    grid-column: 1;
-    grid-row: 1;
     text-align: left;
-    width: 100%;
-    max-width: none;
     padding-bottom: 0;
-  }
-
-  .contact-hero__media {
-    grid-column: 1;
-    grid-row: 2;
-    margin-left: 0;
-    margin-right: 0;
-    justify-content: center;
-  }
-
-  .contact-hero__banner {
-    --contact-hero-banner-max-h: 380px;
-    object-position: center bottom;
   }
 
   .contact-hero__heart {
@@ -2454,16 +2392,13 @@ button {
     font-size: clamp(2.75rem, 12vw, 3.4rem);
   }
 
-  .about-hero__banner {
+  .about-hero__banner,
+  .contact-hero .about-hero__banner {
     max-height: 300px;
   }
 
   .about-hero__title {
     font-size: clamp(1.45rem, 7vw, 1.9rem);
-  }
-
-  .contact-hero__banner {
-    --contact-hero-banner-max-h: 300px;
   }
 
   .contact-hero__title {
