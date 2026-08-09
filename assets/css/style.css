@@ -64,11 +64,15 @@
   --header-pad-y: 10px;
   --hero-pad-y: 0;
   --about-hero-pad-top: 30px;
-  --contact-hero-pad-top: 30px;
-  --contact-hero-title-size: clamp(2.6rem, 4.4vw, 3.85rem);
-  --contact-hero-star-size: clamp(22px, 2.4vw, 30px);
-  --contact-hero-heart-size: clamp(22px, 2.2vw, 28px);
-  --contact-hero-banner-max-h: min(430px, 58vh);
+  --contact-hero-pad-top: 24px;
+  --contact-hero-title-size: clamp(2.75rem, 4.8vw, 4rem);
+  --contact-hero-star-size: clamp(24px, 2.6vw, 34px);
+  --contact-hero-heart-size: clamp(24px, 2.4vw, 30px);
+  --contact-hero-heart-offset-x: clamp(0.75rem, 2vw, 2rem);
+  --contact-hero-copy-max-w: 26.5rem;
+  --contact-hero-banner-max-h: min(540px, 65vh);
+  --contact-hero-grid-text: 0.84fr;
+  --contact-hero-grid-media: 1.16fr;
   --heading-underline-left: -2%;
   --heading-underline-width: 105%;
   --heading-underline-bottom: -0.12em;
@@ -689,15 +693,17 @@ button {
 
 .contact-hero .page-hero__inner {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns:
+    minmax(0, var(--contact-hero-grid-text))
+    minmax(0, var(--contact-hero-grid-media));
   align-items: center;
-  column-gap: clamp(1rem, 2.5vw, 2.5rem);
+  column-gap: 0;
 }
 
 .contact-hero .page-hero__content {
   width: 100%;
   max-width: none;
-  padding-right: 0.5rem;
+  padding-right: clamp(0.5rem, 1.5vw, 1.25rem);
   grid-column: 1;
   grid-row: 1;
 }
@@ -707,8 +713,9 @@ button {
   grid-row: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   min-width: 0;
+  margin-right: calc(var(--container-padding) * -0.35);
   animation: rise-in 0.75s ease 0.08s both;
 }
 
@@ -716,16 +723,16 @@ button {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: var(--contact-hero-title-size);
-  line-height: 1.05;
+  line-height: 1;
   letter-spacing: -0.02em;
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.95rem;
 }
 
 .contact-hero__title-row {
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: flex-start;
-  gap: 0.35rem 0.55rem;
+  gap: 0.45rem 0.6rem;
 }
 
 .contact-hero__contact-word {
@@ -740,34 +747,33 @@ button {
   width: var(--contact-hero-star-size);
   height: var(--contact-hero-star-size);
   flex-shrink: 0;
-  margin-top: 0.15em;
+  margin-top: 0.08em;
   animation: rise-in 0.7s ease 0.15s both;
 }
 
-.contact-hero__heart {
-  display: block;
-  width: var(--contact-hero-heart-size);
-  height: var(--contact-hero-heart-size);
-  margin: 0.15rem 0 0.85rem;
+.contact-hero__body {
+  position: relative;
+  max-width: var(--contact-hero-copy-max-w);
   animation: rise-in 0.7s ease 0.22s both;
 }
 
 .contact-hero__copy {
   font-family: var(--font-body);
-  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  font-size: clamp(0.98rem, 1.08vw, 1.125rem);
   font-weight: 400;
-  line-height: 1.65;
+  line-height: 1.62;
   color: var(--color-navy);
-  max-width: 28rem;
-  animation: rise-in 0.7s ease 0.28s both;
+  margin: 0;
 }
 
-.contact-hero__copy p {
-  margin: 0 0 0.85rem;
-}
-
-.contact-hero__copy p:last-child {
-  margin-bottom: 0;
+.contact-hero__heart {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--contact-hero-heart-offset-x) * -1);
+  transform: translate(100%, -50%);
+  width: var(--contact-hero-heart-size);
+  height: var(--contact-hero-heart-size);
+  pointer-events: none;
 }
 
 .contact-hero__accent {
@@ -784,12 +790,12 @@ button {
 
 .contact-hero__banner {
   width: 100%;
-  max-width: 100%;
+  max-width: none;
   height: auto;
   max-height: var(--contact-hero-banner-max-h);
   min-height: 0;
   object-fit: contain;
-  object-position: center;
+  object-position: center right;
 }
 
 /* ——— Our Story (about page) ——— */
@@ -1658,11 +1664,13 @@ button {
     grid-column: 1;
     grid-row: 2;
     width: 100%;
+    margin-right: 0;
     justify-content: center;
   }
 
   .contact-hero__banner {
-    --contact-hero-banner-max-h: 360px;
+    --contact-hero-banner-max-h: 380px;
+    width: 100%;
     max-width: 100%;
     object-position: center bottom;
   }
@@ -1671,8 +1679,12 @@ button {
     --contact-hero-title-size: clamp(2.2rem, 5vw, 3rem);
   }
 
-  .contact-hero__copy {
-    max-width: 34rem;
+  .contact-hero__body {
+    --contact-hero-copy-max-w: 34rem;
+  }
+
+  .contact-hero__heart {
+    right: calc(var(--contact-hero-heart-offset-x) * -0.5);
   }
 
   .our-story__card {
@@ -1813,15 +1825,23 @@ button {
 
   .contact-hero__title-row {
     justify-content: center;
+    flex-wrap: wrap;
   }
 
-  .contact-hero__heart {
+  .contact-hero__body {
     margin-inline: auto;
+    --contact-hero-copy-max-w: 34rem;
   }
 
   .contact-hero__copy {
-    margin-inline: auto;
     text-align: center;
+  }
+
+  .contact-hero__heart {
+    position: static;
+    display: block;
+    transform: none;
+    margin: 0.65rem auto 0;
   }
 
   .our-story__title {
@@ -2098,7 +2118,7 @@ button {
   }
 
   .contact-hero__banner {
-    --contact-hero-banner-max-h: 280px;
+    --contact-hero-banner-max-h: 300px;
   }
 
   .contact-hero__title {
@@ -2106,7 +2126,7 @@ button {
   }
 
   .contact-hero__copy {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
   }
 
   .page-hero__actions {
