@@ -79,7 +79,7 @@
   --contact-form-aside-width: 32%;
   --contact-form-deco-fit: fill;
   --contact-form-deco-position: center center;
-  --contact-form-wrap-pad: clamp(0.55rem, 1vw, 0.75rem);
+  --contact-form-wrap-pad: 0;
   --contact-form-wrap-gap: clamp(0.55rem, 1vw, 0.75rem);
   --contact-form-border: #e2e5ef;
   --contact-form-input-border: #e0e4ee;
@@ -87,6 +87,10 @@
   --contact-form-input-height: 54px;
   --contact-form-textarea-min-h: 130px;
   --contact-form-privacy-bg: var(--color-pink-soft);
+  --contact-cta-bg: var(--panel-cream);
+  --contact-cta-radius: 20px;
+  --contact-cta-pad-y: clamp(1.75rem, 3.5vw, 3rem);
+  --contact-cta-door-width: clamp(130px, 14vw, 185px);
   --heading-underline-left: -2%;
   --heading-underline-width: 105%;
   --heading-underline-bottom: -0.12em;
@@ -703,30 +707,38 @@ button {
   padding-top: var(--contact-hero-pad-top);
   padding-bottom: 0;
   min-height: 0;
+  display: block;
+  overflow: visible;
 }
 
 .contact-hero .page-hero__inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   align-items: center;
-  gap: var(--contact-hero-gap);
+  column-gap: clamp(0.35rem, 1.2vw, 1rem);
 }
 
 .contact-hero .page-hero__content {
-  flex: 0 0 auto;
-  width: min(var(--contact-hero-copy-max-w), 38%);
-  max-width: var(--contact-hero-copy-max-w);
-  padding-right: 0;
+  flex: none;
+  width: 100%;
+  max-width: none;
+  padding-right: 0.5rem;
+  grid-column: 1;
+  grid-row: 1;
+  text-align: left;
 }
 
 .contact-hero__media {
-  flex: 0 1 auto;
-  width: var(--contact-hero-media-max-w);
-  max-width: var(--contact-hero-media-max-w);
-  margin-left: auto;
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  min-width: 0;
+  margin-left: 0;
   margin-right: calc(var(--container-padding) * -0.35);
+  width: auto;
+  max-width: none;
   animation: rise-in 0.75s ease 0.08s both;
 }
 
@@ -737,6 +749,7 @@ button {
   line-height: 1;
   letter-spacing: -0.02em;
   margin: 0 0 0.95rem;
+  color: inherit;
 }
 
 .contact-hero__title-row {
@@ -801,12 +814,13 @@ button {
 
 .contact-hero__banner {
   width: 100%;
-  max-width: none;
+  max-width: 100%;
   height: auto;
   max-height: var(--contact-hero-banner-max-h);
   min-height: 0;
   object-fit: contain;
   object-position: right center;
+  background-color: transparent;
 }
 
 /* ——— Contact form section ——— */
@@ -824,9 +838,9 @@ button {
   align-items: stretch;
   gap: var(--contact-form-wrap-gap);
   padding: var(--contact-form-wrap-pad);
-  background-color: #fff;
-  border: 1px solid var(--contact-form-border);
-  border-radius: var(--contact-form-radius);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
   overflow: visible;
 }
 
@@ -1036,6 +1050,73 @@ button {
   height: auto;
   pointer-events: none;
   z-index: 2;
+}
+
+/* ——— Contact CTA banner ——— */
+.contact-cta {
+  background-color: #fff;
+}
+
+.contact-cta__inner {
+  padding-top: var(--contact-cta-pad-y);
+  padding-bottom: var(--contact-cta-pad-y);
+}
+
+.contact-cta__card {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2rem);
+  padding: clamp(1.15rem, 2.2vw, 1.75rem) clamp(1.35rem, 2.8vw, 2.5rem);
+  background-color: var(--contact-cta-bg);
+  border-radius: var(--contact-cta-radius);
+  animation: rise-in 0.65s ease both;
+}
+
+.contact-cta__door {
+  flex: 0 0 auto;
+  width: var(--contact-cta-door-width);
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+}
+
+.contact-cta__content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.55rem, 1.2vw, 1rem);
+  min-width: 0;
+}
+
+.contact-cta__text {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.75vw, 1.62rem);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--color-navy);
+  margin: 0;
+  max-width: 36rem;
+}
+
+.contact-cta__deco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  padding-top: 0.15rem;
+}
+
+.contact-cta__heart,
+.contact-cta__star {
+  flex-shrink: 0;
+}
+
+.contact-cta__btn {
+  flex: 0 0 auto;
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 /* ——— Our Story (about page) ——— */
@@ -1890,44 +1971,6 @@ button {
     font-size: clamp(1.55rem, 2.5vw, 2.35rem);
   }
 
-  .contact-hero .page-hero__inner {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.25rem;
-  }
-
-  .contact-hero .page-hero__content {
-    width: 100%;
-    max-width: none;
-  }
-
-  .contact-hero__media {
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    justify-content: center;
-  }
-
-  .contact-hero__banner {
-    --contact-hero-banner-max-h: 380px;
-    width: 100%;
-    max-width: 100%;
-    object-position: center bottom;
-  }
-
-  .contact-hero__title {
-    --contact-hero-title-size: clamp(2.2rem, 5vw, 3rem);
-  }
-
-  .contact-hero__body {
-    --contact-hero-copy-max-w: 34rem;
-  }
-
-  .contact-hero__heart {
-    right: calc(var(--contact-hero-heart-offset-x) * -0.5);
-  }
-
   .contact-form__wrap {
     flex-direction: column;
   }
@@ -1941,6 +1984,23 @@ button {
   .contact-form__aside-copy {
     padding-top: clamp(1.75rem, 4vw, 2.5rem);
     padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .contact-cta__card {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .contact-cta__content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-cta__btn {
+    margin-left: 0;
+    width: 100%;
+    max-width: 320px;
   }
 
   .our-story__card {
@@ -2043,6 +2103,45 @@ button {
     overflow: visible;
   }
 
+  .contact-hero.page-hero {
+    display: block;
+  }
+
+  .contact-hero .page-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.25rem;
+  }
+
+  .contact-hero .page-hero__content {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: left;
+    width: 100%;
+    max-width: none;
+    padding-bottom: 0;
+  }
+
+  .contact-hero__media {
+    grid-column: 1;
+    grid-row: 2;
+    margin-left: 0;
+    margin-right: 0;
+    justify-content: center;
+  }
+
+  .contact-hero__banner {
+    --contact-hero-banner-max-h: 380px;
+    object-position: center bottom;
+  }
+
+  .contact-hero__heart {
+    position: static;
+    display: block;
+    transform: none;
+    margin: 0.65rem auto 0;
+  }
+
   .page-hero__banner {
     position: relative;
     order: 2;
@@ -2086,27 +2185,6 @@ button {
   .about-hero__title-line {
     white-space: normal;
     text-align: center;
-  }
-
-  .contact-hero__title-row {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .contact-hero__body {
-    margin-inline: auto;
-    --contact-hero-copy-max-w: 34rem;
-  }
-
-  .contact-hero__copy {
-    text-align: center;
-  }
-
-  .contact-hero__heart {
-    position: static;
-    display: block;
-    transform: none;
-    margin: 0.65rem auto 0;
   }
 
   .our-story__title {
