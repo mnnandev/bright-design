@@ -77,8 +77,8 @@
   --contact-form-radius: 18px;
   --contact-form-aside-bg: var(--panel-lavender);
   --contact-form-aside-width: 34%;
-  --contact-form-deco-fit: fill;
-  --contact-form-deco-position: center center;
+  --contact-form-deco-fit: cover;
+  --contact-form-deco-position: center bottom;
   --contact-form-wrap-pad: 0;
   --contact-form-wrap-gap: clamp(0.55rem, 1vw, 0.75rem);
   --contact-form-border: #e2e5ef;
