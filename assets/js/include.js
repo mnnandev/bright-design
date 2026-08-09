@@ -56,6 +56,7 @@
       loadPartial('footer.html', '#footer'),
     ])
       .then(function () {
+        window.__includesReady = true;
         document.dispatchEvent(new CustomEvent('includes:loaded'));
       })
       .catch(function (err) {
