@@ -45,6 +45,7 @@
 
   function initNavActiveState() {
     var current = pageSlug(window.location.pathname);
+    var exploreSubpages = ['creative-makers', 'young-ideas-lab', 'create-for-cause', 'community-adventures'];
 
     $('.site-nav a[href], .mobile-menu a[href]').each(function () {
       var $link = $(this);
@@ -54,6 +55,12 @@
         $link.addClass('is-active').attr('aria-current', 'page');
       }
     });
+
+    if (exploreSubpages.indexOf(current) !== -1) {
+      $(
+        '.site-nav__item--dropdown > .nav-link[href="explore.html"], .mobile-menu__group > a[href="explore.html"]'
+      ).addClass('is-active');
+    }
   }
 
   function init() {
