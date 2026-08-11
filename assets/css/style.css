@@ -1816,12 +1816,16 @@ button {
 /* ——— Home spotlight (ideas + council panels) ——— */
 .home-spotlight {
   background-color: #fff;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .home-spotlight__grid {
   display: flex;
   align-items: stretch;
   gap: clamp(0.85rem, 1.4vw, 1.15rem);
+  min-width: 0;
+  max-width: 100%;
 }
 
 .spotlight-card {
@@ -7962,6 +7966,8 @@ button {
   .home-page .home-explore .site-container,
   .home-page .home-spotlight .site-container {
     overflow: visible;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .home-pillars__row::-webkit-scrollbar {
@@ -8755,6 +8761,7 @@ button {
   }
 
   .home-spotlight__grid {
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -8768,6 +8775,10 @@ button {
     padding-bottom: 0.35rem;
     margin-inline: calc(-1 * var(--container-padding));
     padding-inline: var(--container-padding);
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .home-spotlight__grid::-webkit-scrollbar {
@@ -8775,10 +8786,12 @@ button {
   }
 
   .spotlight-card {
-    flex: 0 0 min(300px, 88vw);
+    flex: 0 0 min(280px, 85vw);
     scroll-snap-align: start;
     min-height: clamp(280px, 72vw, 360px);
     flex-direction: column;
+    min-width: 0;
+    overflow: visible;
   }
 
   .spotlight-card--ideas .spotlight-card__content,
@@ -13229,17 +13242,39 @@ button {
   }
 
   .media-policy-sidebar {
-    position: sticky;
-    top: var(--media-policy-mobile-nav-top);
+    position: relative;
     z-index: 25;
-    background: #fff;
-    padding-top: clamp(0.35rem, 1vw, 0.5rem);
-    padding-bottom: clamp(0.45rem, 1.1vw, 0.65rem);
-    margin-bottom: clamp(0.35rem, 0.9vw, 0.55rem);
-    box-shadow: 0 2px 8px rgba(99, 99, 99, 0.12);
-    border-bottom: 1px solid rgba(0, 27, 102, 0.08);
     min-width: 0;
     max-width: 100%;
+    margin-bottom: clamp(0.35rem, 0.9vw, 0.55rem);
+  }
+
+  .media-policy-sidebar.is-fixed .media-policy-sidebar__sticky,
+  .media-policy-sidebar.is-at-bottom .media-policy-sidebar__sticky {
+    z-index: 40;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(99, 99, 99, 0.12);
+    border-bottom: 1px solid rgba(0, 27, 102, 0.08);
+    padding-top: clamp(0.35rem, 1vw, 0.5rem);
+    padding-bottom: clamp(0.45rem, 1.1vw, 0.65rem);
+    padding-inline: var(--container-padding);
+    box-sizing: border-box;
+  }
+
+  .media-policy-sidebar.is-fixed .media-policy-sidebar__sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .media-policy-sidebar.is-at-bottom .media-policy-sidebar__sticky {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
 
   .media-policy-sidebar__sticky {
@@ -13274,11 +13309,16 @@ button {
     scrollbar-width: none;
     gap: clamp(0.45rem, 2vw, 0.6rem);
     padding-bottom: 0.35rem;
-    margin-inline: calc(-1 * var(--container-padding));
-    padding-inline: var(--container-padding);
+    margin-inline: 0;
+    padding-inline: 0;
     width: 100%;
     min-width: 0;
     max-width: 100%;
+  }
+
+  .media-policy-sidebar:not(.is-fixed):not(.is-at-bottom) .media-policy-nav__list {
+    margin-inline: calc(-1 * var(--container-padding));
+    padding-inline: var(--container-padding);
   }
 
   .media-policy-nav__list::-webkit-scrollbar {

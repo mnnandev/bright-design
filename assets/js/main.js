@@ -152,6 +152,7 @@
       width: 0,
       left: 0,
       top: 32,
+      naturalTop: 0,
     };
 
     function readStickyTop() {
@@ -165,50 +166,81 @@
 
     function resetSidebarPosition() {
       $sidebar.removeClass('is-fixed is-at-bottom');
-      $panel.css({ width: '', left: '' });
+      $panel.css({ width: '', left: '', right: '' });
       $sidebar.css('min-height', '');
     }
 
     function measureSidebar() {
       resetSidebarPosition();
-      if (!desktopMq.matches || !$sidebar.length) return;
+      if (!$sidebar.length || !$main.length) return;
 
-      sidebarMetrics.top = readStickyTop();
-      sidebarMetrics.width = $sidebar.outerWidth();
-      sidebarMetrics.left = $sidebar.offset().left;
-      $sidebar.css('min-height', $content.outerHeight());
+      if (desktopMq.matches) {
+        sidebarMetrics.top = readStickyTop();
+        sidebarMetrics.width = $sidebar.outerWidth();
+        sidebarMetrics.left = $sidebar.offset().left;
+        $sidebar.css('min-height', $content.outerHeight());
+        sidebarMetrics.naturalTop = 0;
+        return;
+      }
+
+      sidebarMetrics.top = 0;
+      sidebarMetrics.width = $(window).width();
+      sidebarMetrics.left = 0;
+      sidebarMetrics.naturalTop = $sidebar.offset().top;
     }
 
     function updateSidebarPosition() {
-      if (!desktopMq.matches || !$main.length || !$sidebar.length || !$panel.length) {
-        resetSidebarPosition();
-        return;
-      }
+      if (!$main.length || !$sidebar.length || !$panel.length) return;
 
       var scrollTop = $(window).scrollTop();
       var mainTop = $main.offset().top;
       var mainHeight = $main.outerHeight();
       var panelHeight = $panel.outerHeight();
-      var startFix = mainTop - sidebarMetrics.top;
-      var endFix = mainTop + mainHeight - panelHeight - sidebarMetrics.top;
+      var top = sidebarMetrics.top;
+      var startFix = desktopMq.matches
+        ? mainTop - top
+        : sidebarMetrics.naturalTop - top;
+      var endFix = mainTop + mainHeight - panelHeight - top;
 
       if (scrollTop <= startFix) {
-        $sidebar.removeClass('is-fixed is-at-bottom');
-        $panel.css({ width: '', left: '' });
+        resetSidebarPosition();
+        if (!desktopMq.matches) {
+          sidebarMetrics.naturalTop = $sidebar.offset().top;
+        }
         return;
       }
 
       if (scrollTop >= endFix) {
-        $sidebar.removeClass('is-fixed').addClass('is-at-bottom');
-        $panel.css({ width: sidebarMetrics.width, left: '' });
+        if (desktopMq.matches) {
+          $sidebar.removeClass('is-fixed').addClass('is-at-bottom');
+          $panel.css({
+            width: sidebarMetrics.width,
+            left: '',
+            right: '',
+          });
+          $sidebar.css('min-height', $content.outerHeight());
+        } else {
+          $sidebar.addClass('is-fixed').removeClass('is-at-bottom');
+          $panel.css({
+            width: '100%',
+            left: 0,
+            right: 0,
+          });
+          $sidebar.css('min-height', panelHeight);
+        }
         return;
       }
 
       $sidebar.addClass('is-fixed').removeClass('is-at-bottom');
       $panel.css({
-        width: sidebarMetrics.width,
-        left: sidebarMetrics.left,
+        width: desktopMq.matches ? sidebarMetrics.width : '100%',
+        left: desktopMq.matches ? sidebarMetrics.left : 0,
+        right: desktopMq.matches ? '' : 0,
       });
+
+      if (!desktopMq.matches) {
+        $sidebar.css('min-height', panelHeight);
+      }
     }
 
     function refreshSidebarLayout() {
