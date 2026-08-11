@@ -138,14 +138,16 @@
     if (!$page.length) return;
 
     var $navLinks = $('.media-policy-nav__link');
+    var $navList = $('.media-policy-nav__list');
     var $sections = $('[data-media-section]');
     var $main = $('.media-policy-main');
     var $sidebar = $('.media-policy-sidebar');
     var $panel = $('.media-policy-sidebar__sticky');
     var $content = $('.media-policy-content');
     var desktopMq = window.matchMedia('(min-width: 1025px)');
-    var scrollOffset = 120;
     var observer;
+    var sectionVisibility = {};
+    var currentActiveId = null;
     var sidebarMetrics = {
       width: 0,
       left: 0,
@@ -154,6 +156,11 @@
 
     function readStickyTop() {
       return Math.round(Math.min(Math.max(window.innerWidth * 0.025, 20), 32));
+    }
+
+    function getScrollOffset() {
+      if (desktopMq.matches) return 120;
+      return ($sidebar.outerHeight() || 0) + 16;
     }
 
     function resetSidebarPosition() {
@@ -209,6 +216,57 @@
       updateSidebarPosition();
     }
 
+    function scrollActiveNavIntoView(id) {
+      if (desktopMq.matches || !$navList.length) return;
+
+      var $active = $navLinks.filter('[href="#' + id + '"]');
+      if (!$active.length) return;
+
+      var listEl = $navList.get(0);
+      var linkEl = $active.get(0);
+      var linkLeft = linkEl.offsetLeft;
+      var linkWidth = linkEl.offsetWidth;
+      var listScroll = listEl.scrollLeft;
+      var listWidth = listEl.clientWidth;
+      var edgePad = 12;
+
+      if (linkLeft < listScroll + edgePad) {
+        listEl.scrollTo({ left: Math.max(0, linkLeft - edgePad), behavior: 'smooth' });
+        return;
+      }
+
+      if (linkLeft + linkWidth > listScroll + listWidth - edgePad) {
+        listEl.scrollTo({
+          left: linkLeft + linkWidth - listWidth + edgePad,
+          behavior: 'smooth',
+        });
+      }
+    }
+
+    function setActiveSection(id) {
+      if (!id || id === currentActiveId) return;
+      currentActiveId = id;
+      $navLinks.removeClass('is-active');
+      $navLinks.filter('[href="#' + id + '"]').addClass('is-active');
+      scrollActiveNavIntoView(id);
+    }
+
+    function resolveActiveSectionFromScroll() {
+      if (!$sections.length) return;
+
+      var offset = getScrollOffset();
+      var scrollPos = $(window).scrollTop() + offset + 8;
+      var activeId = $sections.first().attr('id');
+
+      $sections.each(function () {
+        if ($(this).offset().top <= scrollPos) {
+          activeId = this.id;
+        }
+      });
+
+      setActiveSection(activeId);
+    }
+
     $navLinks.on('click', function (event) {
       event.preventDefault();
       var targetId = $(this).attr('href');
@@ -216,33 +274,44 @@
 
       if (!$target.length) return;
 
+      currentActiveId = null;
+      setActiveSection(targetId.replace('#', ''));
+
       $('html, body').animate(
         {
-          scrollTop: $target.offset().top - scrollOffset,
+          scrollTop: $target.offset().top - getScrollOffset(),
         },
         420
       );
     });
 
-    function setActiveSection(id) {
-      if (!id) return;
-      $navLinks.removeClass('is-active');
-      $navLinks.filter('[href="#' + id + '"]').addClass('is-active');
-    }
-
     if ('IntersectionObserver' in window && $sections.length) {
       observer = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              setActiveSection(entry.target.id);
+            sectionVisibility[entry.target.id] = entry.isIntersecting
+              ? entry.intersectionRatio
+              : 0;
+          });
+
+          var bestId = null;
+          var bestRatio = 0;
+
+          Object.keys(sectionVisibility).forEach(function (id) {
+            if (sectionVisibility[id] > bestRatio) {
+              bestRatio = sectionVisibility[id];
+              bestId = id;
             }
           });
+
+          if (bestId && bestRatio > 0 && desktopMq.matches) {
+            setActiveSection(bestId);
+          }
         },
         {
           root: null,
-          rootMargin: '-25% 0px -55% 0px',
-          threshold: 0,
+          rootMargin: desktopMq.matches ? '-25% 0px -55% 0px' : '-12% 0px -62% 0px',
+          threshold: [0, 0.15, 0.35, 0.55, 0.75, 1],
         }
       );
 
@@ -252,14 +321,29 @@
     }
 
     refreshSidebarLayout();
+    resolveActiveSectionFromScroll();
 
-    $(window).on('scroll.mediaPolicySidebar', updateSidebarPosition);
-    $(window).on('resize.mediaPolicySidebar load.mediaPolicySidebar', refreshSidebarLayout);
+    $(window).on('scroll.mediaPolicySidebar', function () {
+      updateSidebarPosition();
+      if (!desktopMq.matches) {
+        resolveActiveSectionFromScroll();
+      }
+    });
+    $(window).on('resize.mediaPolicySidebar load.mediaPolicySidebar', function () {
+      refreshSidebarLayout();
+      resolveActiveSectionFromScroll();
+    });
 
     if (typeof desktopMq.addEventListener === 'function') {
-      desktopMq.addEventListener('change', refreshSidebarLayout);
+      desktopMq.addEventListener('change', function () {
+        refreshSidebarLayout();
+        resolveActiveSectionFromScroll();
+      });
     } else if (typeof desktopMq.addListener === 'function') {
-      desktopMq.addListener(refreshSidebarLayout);
+      desktopMq.addListener(function () {
+        refreshSidebarLayout();
+        resolveActiveSectionFromScroll();
+      });
     }
   }
 
@@ -352,12 +436,106 @@
     });
   }
 
+  function applyScrollRevealTargets() {
+    var animatePages = [
+      'index',
+      'about',
+      'explore',
+      'creative-makers',
+      'young-ideas-lab',
+      'create-for-cause',
+      'community-adventures',
+      'for-parents',
+      'our-vision',
+    ];
+    var current = pageSlug(window.location.pathname);
+
+    if (animatePages.indexOf(current) === -1) return;
+
+    $('#main-content > section:not(.page-hero)').each(function (index) {
+      var $section = $(this);
+      if ($section.hasClass('scroll-rise')) return;
+      $section.addClass('scroll-rise');
+      if (index % 2 === 1) {
+        $section.addClass('scroll-rise--delay-1');
+      }
+    });
+  }
+
+  function initScrollReveal() {
+    applyScrollRevealTargets();
+    var $items = $('.scroll-rise');
+    if (!$items.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      $items.addClass('is-in-view');
+      return;
+    }
+
+    var prefersReduced =
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+      $items.addClass('is-in-view');
+      return;
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in-view');
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px -8% 0px',
+        threshold: 0.08,
+      }
+    );
+
+    $items.each(function () {
+      observer.observe(this);
+    });
+  }
+
+  function initMediaConsentDateFields() {
+    var $page = $('.media-consent-page');
+    if (!$page.length) return;
+
+    var today = new Date().toISOString().split('T')[0];
+    var $dob = $page.find('input[name="child_dob"]');
+    if ($dob.length) {
+      $dob.attr('max', today);
+    }
+
+    $page.on('click', '.media-consent-field-box__btn', function () {
+      var input = this.closest('.media-consent-field-box').querySelector('input[type="date"]');
+      if (!input) return;
+
+      if (typeof input.showPicker === 'function') {
+        try {
+          input.showPicker();
+          return;
+        } catch (error) {
+          /* Some browsers throw if not triggered from a direct user gesture chain */
+        }
+      }
+
+      input.focus();
+      input.click();
+    });
+  }
+
   function init() {
     initMobileMenu();
     initNavActiveState();
     initApplySelects();
     initFaqPage();
     initMediaPolicyPage();
+    initMediaConsentDateFields();
+    initScrollReveal();
   }
 
   function whenIncludesReady(callback) {
