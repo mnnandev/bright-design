@@ -144,7 +144,7 @@
   --partners-ways-card-title-size: clamp(1.08rem, 1.2vw, 1.32rem);
   --partners-ways-card-text-size: clamp(0.92rem, 1vw, 1.05rem);
   --partners-ways-blue: #2b7fd4;
-  --partners-impact-bg: #fffbeb;
+  --partners-impact-bg: #fffbeb85;
   --partners-impact-box-radius: var(--home-pillar-radius);
   --partners-impact-card-title-size: clamp(1rem, 1.1vw, 1.18rem);
   --partners-impact-card-text-size: clamp(0.9rem, 0.98vw, 1.02rem);
@@ -3588,12 +3588,14 @@ button {
 }
 
 .partners-impact-card {
+  position: relative;
   flex: 1 1 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding-bottom: clamp(1.1rem, 1.45vw, 1.35rem);
 }
 
 .partners-impact-card__photo {
@@ -3612,6 +3614,7 @@ button {
   line-height: 1.25;
   color: var(--color-navy);
   margin: 0 0 clamp(0.4rem, 0.65vw, 0.55rem);
+  width: 100%;
 }
 
 .partners-impact-card__text {
@@ -3620,15 +3623,21 @@ button {
   font-size: var(--partners-impact-card-text-size);
   line-height: 1.5;
   color: var(--color-navy);
-  margin: 0 0 clamp(0.65rem, 0.95vw, 0.85rem);
+  margin: 0;
+  width: 100%;
+  padding-inline: clamp(0.15rem, 0.35vw, 0.3rem);
+  padding-right: clamp(1.35rem, 1.8vw, 1.65rem);
 }
 
 .partners-impact-card__deco {
+  position: absolute;
+  right: clamp(0.1rem, 0.35vw, 0.25rem);
+  bottom: clamp(0.05rem, 0.25vw, 0.15rem);
   display: block;
   width: var(--partners-impact-deco-size);
   height: var(--partners-impact-deco-size);
   object-fit: contain;
-  margin-top: auto;
+  pointer-events: none;
   filter: brightness(1.08) contrast(1.06) saturate(1.05);
   mix-blend-mode: multiply;
 }
