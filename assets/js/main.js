@@ -75,6 +75,24 @@
       var $options = $wrap.find('.apply-select__option');
       var placeholder = $native.find('option:disabled').first().text() || 'Select';
 
+      if (!$options.length) {
+        $menu.empty();
+        $native.find('option').each(function () {
+          var $opt = $(this);
+          var val = $opt.attr('value');
+
+          if ($opt.is(':disabled') || val === '') return;
+
+          $('<li><button type="button" class="apply-select__option" role="option"></button></li>')
+            .find('button')
+            .attr('data-value', val)
+            .text($.trim($opt.text()))
+            .end()
+            .appendTo($menu);
+        });
+        $options = $wrap.find('.apply-select__option');
+      }
+
       function closeMenu() {
         $wrap.removeClass('is-open');
         $trigger.attr('aria-expanded', 'false');
