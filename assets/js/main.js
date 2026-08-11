@@ -63,6 +63,76 @@
     }
   }
 
+  function initFaqPage() {
+    var $page = $('.faq-page');
+    if (!$page.length) return;
+
+    var $accordion = $('#faq-accordion');
+    var $items = $accordion.find('.faq-item');
+    var $topics = $('.faq-topic');
+    var $search = $('#faq-search-input');
+    var $empty = $('#faq-empty');
+    var activeTopic = 'about';
+    var topicFilterEnabled = false;
+
+    function itemMatchesTopic($item, topic) {
+      var topics = ($item.attr('data-faq-topic') || '').split(/\s+/);
+      return topics.indexOf(topic) !== -1;
+    }
+
+    function itemMatchesSearch($item, query) {
+      if (!query) return true;
+      return $item.text().toLowerCase().indexOf(query) !== -1;
+    }
+
+    function updateVisibility() {
+      var query = ($search.val() || '').trim().toLowerCase();
+      var visibleCount = 0;
+
+      $items.each(function () {
+        var $item = $(this);
+        var topicMatch = !topicFilterEnabled || itemMatchesTopic($item, activeTopic);
+        var searchMatch = itemMatchesSearch($item, query);
+        var show = topicMatch && searchMatch;
+        $item.toggle(show);
+        if (show) visibleCount += 1;
+      });
+
+      $empty.prop('hidden', visibleCount > 0);
+    }
+
+    $accordion.on('click', '.faq-item__trigger', function () {
+      var $item = $(this).closest('.faq-item');
+      var isOpen = $item.hasClass('is-open');
+
+      if (isOpen) {
+        $item.removeClass('is-open');
+        $(this).attr('aria-expanded', 'false');
+        return;
+      }
+
+      $items.not($item).each(function () {
+        var $other = $(this);
+        $other.removeClass('is-open');
+        $other.find('.faq-item__trigger').attr('aria-expanded', 'false');
+      });
+
+      $item.addClass('is-open');
+      $(this).attr('aria-expanded', 'true');
+    });
+
+    $topics.on('click', function () {
+      activeTopic = $(this).attr('data-faq-topic');
+      topicFilterEnabled = true;
+      $topics.removeClass('is-active').attr('aria-selected', 'false');
+      $(this).addClass('is-active').attr('aria-selected', 'true');
+      updateVisibility();
+    });
+
+    $search.on('input', updateVisibility);
+    updateVisibility();
+  }
+
   function initApplySelects() {
     $('[data-apply-select]').each(function () {
       var $wrap = $(this);
@@ -156,6 +226,7 @@
     initMobileMenu();
     initNavActiveState();
     initApplySelects();
+    initFaqPage();
   }
 
   function whenIncludesReady(callback) {
