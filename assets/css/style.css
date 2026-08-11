@@ -149,6 +149,19 @@
   --partners-impact-card-title-size: clamp(1rem, 1.1vw, 1.18rem);
   --partners-impact-card-text-size: clamp(0.9rem, 0.98vw, 1.02rem);
   --partners-impact-deco-size: clamp(22px, 2vw, 28px);
+  --partners-opportunity-cta-gradient: linear-gradient(
+    90deg,
+    #e91e63 0%,
+    #c2185b 42%,
+    #7b1fa2 78%,
+    #5e35b1 100%
+  );
+  --partners-opportunity-cta-radius: 20px;
+  --partners-opportunity-bulb-size: clamp(52px, 5vw, 72px);
+  --partners-opportunity-plane-width: clamp(88px, 9vw, 120px);
+  --partners-founding-icon-size: clamp(68px, 6.5vw, 84px);
+  --partners-founding-card-title-size: clamp(0.92rem, 1vw, 1.08rem);
+  --partners-founding-card-text-size: clamp(0.9rem, 0.98vw, 1.02rem);
   --get-involved-impact-copy-col: 0.32fr;
   --get-involved-impact-visual-col: 0.68fr;
   --get-involved-timeline-icon-size: clamp(46px, 4.4vw, 58px);
@@ -3640,6 +3653,246 @@ button {
   pointer-events: none;
   filter: brightness(1.08) contrast(1.06) saturate(1.05);
   mix-blend-mode: multiply;
+}
+
+/* ——— Partners opportunity CTA ——— */
+.partners-opportunity-cta {
+  background-color: #fff;
+  padding-top: 0;
+}
+
+.partners-opportunity-cta__inner {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.partners-opportunity-cta__card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr) auto auto;
+  align-items: center;
+  gap: clamp(0.75rem, 1.35vw, 1.15rem);
+  padding: clamp(1.1rem, 1.85vw, 1.55rem) clamp(1.15rem, 2vw, 1.75rem);
+  background: var(--partners-opportunity-cta-gradient);
+  border-radius: var(--partners-opportunity-cta-radius);
+  color: #fff;
+}
+
+.partners-opportunity-cta__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.75vw, 1.65rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0;
+}
+
+.partners-opportunity-cta__title .heading-underline--partners-cta {
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+  white-space: nowrap;
+  isolation: isolate;
+}
+
+.partners-opportunity-cta__title .heading-underline--partners-cta .heading-underline__img {
+  left: 0;
+  width: 100%;
+  bottom: -0.08em;
+  max-height: 12px;
+  min-height: 8px;
+  z-index: -1;
+}
+
+.partners-opportunity-cta__lead {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.55rem, 0.95vw, 0.8rem);
+  min-width: 0;
+}
+
+.partners-opportunity-cta__bulb {
+  flex-shrink: 0;
+  width: var(--partners-opportunity-bulb-size);
+  height: var(--partners-opportunity-bulb-size);
+  object-fit: contain;
+}
+
+.partners-opportunity-cta__text {
+  font-family: var(--font-body);
+  font-size: clamp(0.82rem, 0.92vw, 0.95rem);
+  line-height: 1.48;
+  color: rgba(255, 255, 255, 0.96);
+  margin: 0;
+  max-width: 34rem;
+}
+
+.partners-opportunity-cta__btn {
+  flex-shrink: 0;
+  background-color: #fff;
+  border-color: #fff;
+  color: #5e35b1;
+  white-space: nowrap;
+}
+
+.partners-opportunity-cta__btn:hover {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.92);
+  color: #5e35b1;
+}
+
+.partners-opportunity-cta__plane {
+  flex-shrink: 0;
+  width: var(--partners-opportunity-plane-width);
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: screen;
+}
+
+/* ——— Partners founding (5 dashed cards) ——— */
+.partners-founding {
+  background-color: #fff;
+}
+
+.partners-founding__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-navy);
+  text-align: center;
+  margin: 0 0 clamp(0.65rem, 1.1vw, 0.85rem);
+}
+
+.partners-founding__title-icon {
+  flex-shrink: 0;
+  color: var(--color-pink);
+}
+
+.partners-founding__intro {
+  font-family: var(--font-body);
+  font-size: clamp(0.88rem, 0.98vw, 1rem);
+  line-height: 1.5;
+  color: var(--color-navy);
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto clamp(1.1rem, 2vw, 1.55rem);
+}
+
+.partners-founding__grid {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.65rem, 1.1vw, 0.95rem);
+}
+
+.partners-founding-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: var(--experience-card-radius);
+  border: 2px dashed transparent;
+  padding: clamp(1rem, 1.35vw, 1.2rem) clamp(0.65rem, 0.95vw, 0.85rem)
+    clamp(0.95rem, 1.25vw, 1.1rem);
+}
+
+.partners-founding-card--purple {
+  border-color: rgba(155, 89, 208, 0.55);
+  background-color: var(--believe-card-purple);
+}
+
+.partners-founding-card--green {
+  border-color: rgba(111, 191, 74, 0.55);
+  background-color: var(--believe-card-green);
+}
+
+.partners-founding-card--blue {
+  border-color: rgba(43, 127, 212, 0.55);
+  background-color: var(--believe-card-blue);
+}
+
+.partners-founding-card--pink {
+  border-color: rgba(238, 29, 120, 0.45);
+  background-color: var(--believe-card-pink);
+}
+
+.partners-founding-card--gold {
+  border-color: rgba(245, 165, 35, 0.55);
+  background-color: var(--believe-card-yellow);
+}
+
+.partners-founding-card__icon {
+  display: block;
+  width: var(--partners-founding-icon-size);
+  height: var(--partners-founding-icon-size);
+  object-fit: contain;
+  margin: 0 0 clamp(0.65rem, 0.95vw, 0.8rem);
+  filter: brightness(1.1) contrast(1.08) saturate(1.05);
+  mix-blend-mode: multiply;
+}
+
+.partners-founding-card--purple .partners-founding-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.08) hue-rotate(-4deg);
+}
+
+.partners-founding-card--green .partners-founding-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.1) hue-rotate(8deg);
+}
+
+.partners-founding-card--blue .partners-founding-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.08) hue-rotate(-12deg);
+}
+
+.partners-founding-card--pink .partners-founding-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.1) hue-rotate(320deg);
+}
+
+.partners-founding-card--gold .partners-founding-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.12) hue-rotate(-6deg);
+}
+
+.partners-founding-card__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--partners-founding-card-title-size);
+  line-height: 1.28;
+  margin: 0 0 clamp(0.4rem, 0.65vw, 0.55rem);
+}
+
+.partners-founding-card--purple .partners-founding-card__title {
+  color: var(--color-plane);
+}
+
+.partners-founding-card--green .partners-founding-card__title {
+  color: var(--color-green);
+}
+
+.partners-founding-card--blue .partners-founding-card__title {
+  color: var(--partners-ways-blue);
+}
+
+.partners-founding-card--pink .partners-founding-card__title {
+  color: var(--color-pink);
+}
+
+.partners-founding-card--gold .partners-founding-card__title {
+  color: var(--color-orange);
+}
+
+.partners-founding-card__text {
+  font-family: var(--font-body);
+  font-size: var(--partners-founding-card-text-size);
+  line-height: 1.48;
+  color: var(--color-navy);
+  margin: 0;
 }
 
 /* ——— Get Involved impact (timeline + illustration) ——— */
@@ -7959,6 +8212,54 @@ button {
   }
 
   .partners-impact-card {
+    flex: 0 0 min(240px, 74vw);
+    scroll-snap-align: start;
+  }
+
+  .partners-opportunity-cta__card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .partners-opportunity-cta__lead {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .partners-opportunity-cta__text {
+    max-width: none;
+  }
+
+  .partners-opportunity-cta__btn {
+    width: 100%;
+    max-width: 22rem;
+    justify-content: center;
+    margin-inline: auto;
+  }
+
+  .partners-opportunity-cta__plane {
+    margin-inline: auto;
+  }
+
+  .partners-founding__grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+    touch-action: pan-y pinch-zoom;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.35rem;
+    margin-inline: calc(-1 * var(--container-padding));
+    padding-inline: var(--container-padding);
+  }
+
+  .partners-founding__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .partners-founding-card {
     flex: 0 0 min(240px, 74vw);
     scroll-snap-align: start;
   }
