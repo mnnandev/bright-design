@@ -133,6 +133,136 @@
     updateVisibility();
   }
 
+  function initMediaPolicyPage() {
+    var $page = $('.media-policy-page');
+    if (!$page.length) return;
+
+    var $navLinks = $('.media-policy-nav__link');
+    var $sections = $('[data-media-section]');
+    var $main = $('.media-policy-main');
+    var $sidebar = $('.media-policy-sidebar');
+    var $panel = $('.media-policy-sidebar__sticky');
+    var $content = $('.media-policy-content');
+    var desktopMq = window.matchMedia('(min-width: 1025px)');
+    var scrollOffset = 120;
+    var observer;
+    var sidebarMetrics = {
+      width: 0,
+      left: 0,
+      top: 32,
+    };
+
+    function readStickyTop() {
+      return Math.round(Math.min(Math.max(window.innerWidth * 0.025, 20), 32));
+    }
+
+    function resetSidebarPosition() {
+      $sidebar.removeClass('is-fixed is-at-bottom');
+      $panel.css({ width: '', left: '' });
+      $sidebar.css('min-height', '');
+    }
+
+    function measureSidebar() {
+      resetSidebarPosition();
+      if (!desktopMq.matches || !$sidebar.length) return;
+
+      sidebarMetrics.top = readStickyTop();
+      sidebarMetrics.width = $sidebar.outerWidth();
+      sidebarMetrics.left = $sidebar.offset().left;
+      $sidebar.css('min-height', $content.outerHeight());
+    }
+
+    function updateSidebarPosition() {
+      if (!desktopMq.matches || !$main.length || !$sidebar.length || !$panel.length) {
+        resetSidebarPosition();
+        return;
+      }
+
+      var scrollTop = $(window).scrollTop();
+      var mainTop = $main.offset().top;
+      var mainHeight = $main.outerHeight();
+      var panelHeight = $panel.outerHeight();
+      var startFix = mainTop - sidebarMetrics.top;
+      var endFix = mainTop + mainHeight - panelHeight - sidebarMetrics.top;
+
+      if (scrollTop <= startFix) {
+        $sidebar.removeClass('is-fixed is-at-bottom');
+        $panel.css({ width: '', left: '' });
+        return;
+      }
+
+      if (scrollTop >= endFix) {
+        $sidebar.removeClass('is-fixed').addClass('is-at-bottom');
+        $panel.css({ width: sidebarMetrics.width, left: '' });
+        return;
+      }
+
+      $sidebar.addClass('is-fixed').removeClass('is-at-bottom');
+      $panel.css({
+        width: sidebarMetrics.width,
+        left: sidebarMetrics.left,
+      });
+    }
+
+    function refreshSidebarLayout() {
+      measureSidebar();
+      updateSidebarPosition();
+    }
+
+    $navLinks.on('click', function (event) {
+      event.preventDefault();
+      var targetId = $(this).attr('href');
+      var $target = $(targetId);
+
+      if (!$target.length) return;
+
+      $('html, body').animate(
+        {
+          scrollTop: $target.offset().top - scrollOffset,
+        },
+        420
+      );
+    });
+
+    function setActiveSection(id) {
+      if (!id) return;
+      $navLinks.removeClass('is-active');
+      $navLinks.filter('[href="#' + id + '"]').addClass('is-active');
+    }
+
+    if ('IntersectionObserver' in window && $sections.length) {
+      observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-25% 0px -55% 0px',
+          threshold: 0,
+        }
+      );
+
+      $sections.each(function () {
+        observer.observe(this);
+      });
+    }
+
+    refreshSidebarLayout();
+
+    $(window).on('scroll.mediaPolicySidebar', updateSidebarPosition);
+    $(window).on('resize.mediaPolicySidebar load.mediaPolicySidebar', refreshSidebarLayout);
+
+    if (typeof desktopMq.addEventListener === 'function') {
+      desktopMq.addEventListener('change', refreshSidebarLayout);
+    } else if (typeof desktopMq.addListener === 'function') {
+      desktopMq.addListener(refreshSidebarLayout);
+    }
+  }
+
   function initApplySelects() {
     $('[data-apply-select]').each(function () {
       var $wrap = $(this);
@@ -227,6 +357,7 @@
     initNavActiveState();
     initApplySelects();
     initFaqPage();
+    initMediaPolicyPage();
   }
 
   function whenIncludesReady(callback) {
