@@ -139,6 +139,16 @@
   --get-involved-ways-icon-size: clamp(68px, 6.5vw, 84px);
   --get-involved-ways-card-title-size: clamp(0.92rem, 1vw, 1.08rem);
   --get-involved-ways-card-text-size: clamp(0.78rem, 0.86vw, 0.88rem);
+  --partners-ways-icon-size: clamp(68px, 6.5vw, 84px);
+  --partners-ways-icon-filter: brightness(1.12) contrast(1.1) saturate(1.04);
+  --partners-ways-card-title-size: clamp(1.08rem, 1.2vw, 1.32rem);
+  --partners-ways-card-text-size: clamp(0.92rem, 1vw, 1.05rem);
+  --partners-ways-blue: #2b7fd4;
+  --partners-impact-bg: #fffbeb;
+  --partners-impact-box-radius: var(--home-pillar-radius);
+  --partners-impact-card-title-size: clamp(1rem, 1.1vw, 1.18rem);
+  --partners-impact-card-text-size: clamp(0.9rem, 0.98vw, 1.02rem);
+  --partners-impact-deco-size: clamp(22px, 2vw, 28px);
   --get-involved-impact-copy-col: 0.32fr;
   --get-involved-impact-visual-col: 0.68fr;
   --get-involved-timeline-icon-size: clamp(46px, 4.4vw, 58px);
@@ -2025,7 +2035,8 @@ button {
 .creative-makers-hero,
 .young-ideas-lab-hero,
 .create-for-cause-hero,
-.community-adventures-hero {
+.community-adventures-hero,
+.partners-hero {
   background-color: #fff;
   min-height: 0;
 }
@@ -3386,6 +3397,242 @@ button {
   opacity: 0.82;
 }
 
+/* ——— Partners ways (5 cards) ——— */
+.partners-ways {
+  background-color: #fff;
+}
+
+.partners-ways__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-navy);
+  text-align: center;
+  margin: 0 0 clamp(0.65rem, 1.1vw, 0.85rem);
+}
+
+.partners-ways__title-icon {
+  flex-shrink: 0;
+  color: var(--color-pink);
+}
+
+.partners-ways__intro {
+  font-family: var(--font-body);
+  font-size: clamp(0.88rem, 0.98vw, 1rem);
+  line-height: 1.5;
+  color: var(--color-navy);
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto clamp(1.1rem, 2vw, 1.55rem);
+}
+
+.partners-ways__grid {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.65rem, 1.1vw, 0.95rem);
+}
+
+.partners-ways-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: var(--home-pillar-radius);
+  padding: clamp(1rem, 1.35vw, 1.2rem) clamp(0.65rem, 0.95vw, 0.85rem)
+    clamp(1rem, 1.35vw, 1.2rem);
+}
+
+.partners-ways-card--purple {
+  background-color: var(--believe-card-purple);
+}
+
+.partners-ways-card--green {
+  background-color: var(--believe-card-green);
+}
+
+.partners-ways-card--blue {
+  background-color: var(--believe-card-blue);
+}
+
+.partners-ways-card--pink {
+  background-color: var(--believe-card-pink);
+}
+
+.partners-ways-card--orange {
+  background-color: var(--vision-pillar-orange-bg);
+}
+
+.partners-ways-card__icon {
+  display: block;
+  width: var(--partners-ways-icon-size);
+  height: var(--partners-ways-icon-size);
+  object-fit: contain;
+  margin: 0 0 clamp(0.65rem, 0.95vw, 0.8rem);
+  filter: var(--partners-ways-icon-filter);
+  mix-blend-mode: multiply;
+}
+
+.partners-ways-card--purple .partners-ways-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.08) hue-rotate(-4deg);
+}
+
+.partners-ways-card--green .partners-ways-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.1) hue-rotate(8deg);
+}
+
+.partners-ways-card--blue .partners-ways-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.08) hue-rotate(-12deg);
+}
+
+.partners-ways-card--pink .partners-ways-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.1) hue-rotate(320deg);
+}
+
+.partners-ways-card--orange .partners-ways-card__icon {
+  filter: brightness(1.1) contrast(1.08) saturate(1.12) hue-rotate(-6deg);
+}
+
+.partners-ways-card__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--partners-ways-card-title-size);
+  line-height: 1.25;
+  margin: 0 0 clamp(0.55rem, 0.8vw, 0.72rem);
+}
+
+.partners-ways-card--purple .partners-ways-card__title {
+  color: var(--color-plane);
+}
+
+.partners-ways-card--green .partners-ways-card__title {
+  color: var(--color-green);
+}
+
+.partners-ways-card--blue .partners-ways-card__title {
+  color: var(--partners-ways-blue);
+}
+
+.partners-ways-card--pink .partners-ways-card__title {
+  color: var(--color-pink);
+}
+
+.partners-ways-card--orange .partners-ways-card__title {
+  color: var(--color-orange);
+}
+
+.partners-ways-card__text {
+  flex: 1 1 auto;
+  font-family: var(--font-body);
+  font-size: var(--partners-ways-card-text-size);
+  line-height: 1.52;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+/* ——— Partners impact (5 photo cards in cream box) ——— */
+.partners-impact {
+  background-color: #fff;
+}
+
+.partners-impact__box {
+  background-color: var(--partners-impact-bg);
+  border-radius: var(--partners-impact-box-radius);
+  padding: clamp(1.35rem, 2.4vw, 2.15rem) clamp(1rem, 1.85vw, 1.65rem)
+    clamp(1.25rem, 2.1vw, 1.85rem);
+}
+
+.partners-impact__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-navy);
+  text-align: center;
+  margin: 0 0 clamp(0.65rem, 1.1vw, 0.85rem);
+}
+
+.partners-impact__title-star {
+  flex-shrink: 0;
+  color: var(--color-yellow);
+}
+
+.partners-impact__intro {
+  font-family: var(--font-body);
+  font-size: clamp(0.92rem, 1.02vw, 1.05rem);
+  line-height: 1.5;
+  color: var(--color-navy);
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto clamp(1.15rem, 2vw, 1.65rem);
+}
+
+.partners-impact__grid {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.65rem, 1.1vw, 0.95rem);
+}
+
+.partners-impact-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.partners-impact-card__photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--experience-photo-radius);
+  margin-bottom: clamp(0.7rem, 1vw, 0.9rem);
+}
+
+.partners-impact-card__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--partners-impact-card-title-size);
+  line-height: 1.25;
+  color: var(--color-navy);
+  margin: 0 0 clamp(0.4rem, 0.65vw, 0.55rem);
+}
+
+.partners-impact-card__text {
+  flex: 1 1 auto;
+  font-family: var(--font-body);
+  font-size: var(--partners-impact-card-text-size);
+  line-height: 1.5;
+  color: var(--color-navy);
+  margin: 0 0 clamp(0.65rem, 0.95vw, 0.85rem);
+}
+
+.partners-impact-card__deco {
+  display: block;
+  width: var(--partners-impact-deco-size);
+  height: var(--partners-impact-deco-size);
+  object-fit: contain;
+  margin-top: auto;
+  filter: brightness(1.08) contrast(1.06) saturate(1.05);
+  mix-blend-mode: multiply;
+}
+
 /* ——— Get Involved impact (timeline + illustration) ——— */
 .get-involved-impact {
   background-color: #fff;
@@ -3943,6 +4190,22 @@ button {
   left: 0;
   width: 100%;
   bottom: -0.08em;
+}
+
+.partners-hero .vision-hero__title .heading-underline--partners {
+  display: inline-block;
+}
+
+.partners-hero .vision-hero__title .heading-underline--partners .heading-underline__img {
+  left: 0;
+  width: 100%;
+  bottom: -0.06em;
+  max-height: 12px;
+}
+
+.partners-hero.vision-hero .about-hero__banner {
+  max-height: none;
+  min-height: unset;
 }
 
 .for-parents-info-card__features {
@@ -7074,6 +7337,11 @@ button {
     transform-origin: center bottom;
   }
 
+  .partners-hero.vision-hero .about-hero__banner {
+    max-height: none;
+    min-height: unset;
+  }
+
   .explore-hero .page-hero__content {
     padding-right: 0;
   }
@@ -7636,6 +7904,52 @@ button {
   }
 
   .get-involved-ways-card {
+    flex: 0 0 min(240px, 74vw);
+    scroll-snap-align: start;
+  }
+
+  .partners-ways__grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+    touch-action: pan-y pinch-zoom;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.35rem;
+    margin-inline: calc(-1 * var(--container-padding));
+    padding-inline: var(--container-padding);
+  }
+
+  .partners-ways__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .partners-ways-card {
+    flex: 0 0 min(240px, 74vw);
+    scroll-snap-align: start;
+  }
+
+  .partners-impact__grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+    touch-action: pan-y pinch-zoom;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.35rem;
+    margin-inline: calc(-1 * clamp(1rem, 1.85vw, 1.65rem));
+    padding-inline: clamp(1rem, 1.85vw, 1.65rem);
+  }
+
+  .partners-impact__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .partners-impact-card {
     flex: 0 0 min(240px, 74vw);
     scroll-snap-align: start;
   }
@@ -8313,6 +8627,11 @@ button {
   .vision-hero .about-hero__banner,
   .explore-hero__banner {
     max-height: 300px;
+  }
+
+  .partners-hero.vision-hero .about-hero__banner {
+    max-height: none;
+    min-height: unset;
   }
 
   .about-hero__title,
