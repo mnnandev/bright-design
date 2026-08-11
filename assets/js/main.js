@@ -63,9 +63,81 @@
     }
   }
 
+  function initApplySelects() {
+    $('[data-apply-select]').each(function () {
+      var $wrap = $(this);
+      if ($wrap.data('applySelectInit')) return;
+
+      var $native = $wrap.find('.apply-select__native');
+      var $trigger = $wrap.find('.apply-select__trigger');
+      var $value = $wrap.find('.apply-select__value');
+      var $menu = $wrap.find('.apply-select__menu');
+      var $options = $wrap.find('.apply-select__option');
+      var placeholder = $native.find('option:disabled').first().text() || 'Select';
+
+      function closeMenu() {
+        $wrap.removeClass('is-open');
+        $trigger.attr('aria-expanded', 'false');
+        $menu.prop('hidden', true);
+      }
+
+      function openMenu() {
+        $wrap.addClass('is-open');
+        $trigger.attr('aria-expanded', 'true');
+        $menu.prop('hidden', false);
+      }
+
+      function setValue(nextValue, label) {
+        $native.val(nextValue).trigger('change');
+        $value.text(label).toggleClass('is-placeholder', !nextValue);
+        $options.removeClass('is-selected').filter('[data-value="' + nextValue + '"]').addClass('is-selected');
+        $options.attr('aria-selected', 'false');
+        $options.filter('[data-value="' + nextValue + '"]').attr('aria-selected', 'true');
+      }
+
+      $trigger.on('click', function () {
+        if ($wrap.hasClass('is-open')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      $options.on('click', function () {
+        var $option = $(this);
+        setValue($option.data('value'), $.trim($option.text()));
+        closeMenu();
+        $trigger.trigger('focus');
+      });
+
+      $(document).on('click.applySelect', function (event) {
+        if (!$wrap.is(event.target) && $wrap.has(event.target).length === 0) {
+          closeMenu();
+        }
+      });
+
+      $(document).on('keydown.applySelect', function (event) {
+        if (event.key === 'Escape') {
+          closeMenu();
+        }
+      });
+
+      $native.on('invalid', function () {
+        $trigger.trigger('focus');
+      });
+
+      if (!$native.val()) {
+        $value.text(placeholder).addClass('is-placeholder');
+      }
+
+      $wrap.data('applySelectInit', true);
+    });
+  }
+
   function init() {
     initMobileMenu();
     initNavActiveState();
+    initApplySelects();
   }
 
   function whenIncludesReady(callback) {
