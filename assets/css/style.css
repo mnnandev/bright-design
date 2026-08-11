@@ -11976,10 +11976,11 @@ button {
   --faq-section-pink: #fff5f9;
   --faq-hero-pink: #fff8fb;
   --faq-search-border: rgba(238, 29, 120, 0.42);
+  --faq-hero-banner-filter: brightness(1.05) contrast(1.06) saturate(1.04);
 }
 
 .faq-hero {
-  background-color: var(--faq-hero-pink);
+  background-color: #fff;
   overflow: visible;
 }
 
@@ -11993,6 +11994,10 @@ button {
   align-items: center;
   gap: var(--home-hero-col-gap);
   min-height: 0;
+  background-color: var(--faq-hero-pink);
+  border-radius: var(--experience-card-radius);
+  padding-top: clamp(1.25rem, 2vw, 1.75rem);
+  padding-bottom: clamp(1.25rem, 2vw, 1.75rem);
 }
 
 .faq-hero .page-hero__content {
@@ -12003,6 +12008,7 @@ button {
 
 .faq-hero__media {
   animation: rise-in 0.7s ease 0.08s both;
+  background-color: var(--faq-hero-pink);
 }
 
 .faq-hero__eyebrow {
@@ -12062,6 +12068,8 @@ button {
   max-height: none;
   min-height: unset;
   object-fit: contain;
+  filter: var(--faq-hero-banner-filter);
+  mix-blend-mode: multiply;
 }
 
 .faq-search__inner {
@@ -12074,6 +12082,7 @@ button {
 
 .faq-search__intro {
   margin: 0;
+  padding-top: 20px;
   font-family: var(--font-body);
   font-size: clamp(0.92rem, 1vw, 1.02rem);
   line-height: 1.5;
