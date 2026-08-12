@@ -44,9 +44,10 @@
   --compare-photo-share: 44%;
   --role-heart-size: clamp(22px, 2.2vw, 30px);
   --role-callout-heart-size: clamp(28px, 2.8vw, 38px);
-  --panel-bg-size: cover;
+  --panel-bg-size: clamp(160px, 20vw, 200px) auto;
   --panel-bg-position: right center;
-  --panel-council-figure-width: 250px;
+  --panel-journey-content-max: 54%;
+  --panel-council-figure-width: 185px;
   --font-heading: 'Bitter', serif;
   --font-body: 'Outfit', sans-serif;
   --believe-icon-height: clamp(48px, 4.8vw, 58px);
@@ -2959,6 +2960,25 @@ img.lazy-img.loaded {
   overflow: hidden;
   border-radius: var(--home-pillar-radius);
   align-self: stretch;
+}
+
+.vision-moments__photo-wrap > .lazy-img-wrap,
+.vision-moments__feature-inner > .lazy-img-wrap {
+  height: 100%;
+}
+
+.vision-moments__photo-wrap > .lazy-img-wrap .vision-moments__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.vision-moments__feature-inner > .lazy-img-wrap .vision-moments__feature-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .vision-moments__photo {
@@ -7183,8 +7203,10 @@ img.lazy-img.loaded {
 }
 
 .panel-card--journey {
+  display: flex;
+  align-items: stretch;
   background-color: var(--panel-cream);
-  background-image: url('../images/panel-journey-girl.jpeg');
+  background-image: none;
 }
 
 .panel-card--council {
@@ -7193,15 +7215,26 @@ img.lazy-img.loaded {
   background-color: var(--panel-lavender);
 }
 
-.panel-card--council .panel-card__content {
-  flex: 1 1 auto;
+.panel-card--journey .panel-card__content {
+  flex: 1 1 0;
   width: auto;
   min-width: 0;
-  position: relative;
-  z-index: 1;
+  max-width: calc(100% - var(--panel-council-figure-width) - clamp(0.5rem, 1vw, 0.85rem));
+  box-sizing: border-box;
 }
 
-.panel-card__figure {
+.panel-card--council .panel-card__content {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  max-width: calc(100% - var(--panel-council-figure-width) - clamp(0.5rem, 1vw, 0.85rem));
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.panel-card--journey .panel-card__figure,
+.panel-card--council .panel-card__figure {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -7209,15 +7242,28 @@ img.lazy-img.loaded {
   align-self: center;
   padding: clamp(0.65rem, 1.2vw, 1rem);
   padding-left: 0;
-  background-color: var(--panel-lavender);
   isolation: isolate;
+}
+
+.panel-card--journey .panel-card__figure {
+  background-color: var(--panel-cream);
+}
+
+.panel-card--council .panel-card__figure {
+  background-color: var(--panel-lavender);
 }
 
 .panel-card__figure-img {
   display: block;
   width: var(--panel-council-figure-width);
+  max-width: 100%;
   height: auto;
   object-fit: contain;
+}
+
+.panel-card__figure .lazy-img-wrap {
+  width: var(--panel-council-figure-width);
+  max-width: 100%;
 }
 
 .panel-card--role,
@@ -7243,10 +7289,6 @@ img.lazy-img.loaded {
 .panel-card__content--full {
   width: 100%;
   padding-bottom: clamp(1.1rem, 2vw, 1.65rem);
-}
-
-.panel-card--journey .panel-card__content {
-  width: min(100%, 58%);
 }
 
 .panel-card__title-icon--heart {
@@ -9104,7 +9146,8 @@ img.lazy-img.loaded {
     --believe-text-max-width: 10.5rem;
   }
 
-  .panel-card--council {
+  .panel-card--council,
+  .panel-card--journey {
     flex-direction: column;
     max-width: 100%;
   }
