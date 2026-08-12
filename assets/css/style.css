@@ -78,6 +78,7 @@
   --footer-newsletter-gap: clamp(0.5rem, 0.85vw, 0.65rem);
   --footer-newsletter-shell-height: 48px;
   --header-pad-y: 10px;
+  --header-logo-height: clamp(72px, 5.5vw, 92px);
   --hero-pad-y: 0;
   --about-hero-pad-top: 30px;
   --home-hero-logo-width: 380px;
@@ -940,7 +941,7 @@ button {
   gap: 1.25rem;
   padding-top: var(--header-pad-y);
   padding-bottom: var(--header-pad-y);
-  min-height: 72px;
+  min-height: calc(var(--header-logo-height) + var(--header-pad-y) * 2);
 }
 
 .site-header__logo {
@@ -949,7 +950,7 @@ button {
 
 .site-header__logo img {
   width: auto;
-  height: 64px;
+  height: var(--header-logo-height);
   object-fit: contain;
   filter: var(--logo-bg-filter);
 }
@@ -7804,7 +7805,7 @@ img.lazy-img.loaded {
   }
 
   .site-header__logo img {
-    height: 48px;
+    --header-logo-height: 56px;
   }
 
   .site-nav__list {
@@ -9474,7 +9475,7 @@ img.lazy-img.loaded {
   }
 
   .site-header__logo img {
-    height: 44px;
+    --header-logo-height: 52px;
   }
 
   .home-hero__logo {
