@@ -46,14 +46,17 @@
           </div>
 
           <div class="about-hero__media">
-            <img
-              class="about-hero__banner apply-hero__banner"
-              src="assets/images/apply-hero-banner.png"
-              alt="A young girl smiling while drawing with colored pencils"
-              width="1200"
-              height="900"
-              decoding="async"
-            />
+            <div class="lazy-img-wrap">
+              <img
+                class="about-hero__banner apply-hero__banner lazy-img"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                data-src="assets/images/apply-hero-banner.png"
+                alt="A young girl smiling while drawing with colored pencils"
+                width="1200"
+                height="900"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -795,6 +798,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="assets/js/include.js"></script>
+    <script src="assets/js/lazy-images.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>

@@ -43,14 +43,17 @@
           </div>
 
           <div class="about-hero__media">
-            <img
-              class="about-hero__banner apply-hero__banner volunteer-hero__banner"
-              src="assets/images/volunteer-hero-banner.png"
-              alt="A volunteer smiling while helping children with a creative activity"
-              width="1200"
-              height="900"
-              decoding="async"
-            />
+            <div class="lazy-img-wrap">
+              <img
+                class="about-hero__banner apply-hero__banner volunteer-hero__banner lazy-img"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                data-src="assets/images/volunteer-hero-banner.png"
+                alt="A volunteer smiling while helping children with a creative activity"
+                width="1200"
+                height="900"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -345,6 +348,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="assets/js/include.js"></script>
+    <script src="assets/js/lazy-images.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>

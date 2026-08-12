@@ -752,17 +752,18 @@
     initApplyFormSidebar();
     initMediaConsentDateFields();
     initNewsletterSignupPage();
-    initHomeLazyImages();
+    initLazyImages();
     initScrollReveal();
   }
 
-  function initHomeLazyImages() {
-    if (!$('.home-page').length) {
+  function initLazyImages() {
+    if (!window.BrightDreamersLazyImages) {
       return;
     }
 
-    if (window.BrightDreamersLazyImages) {
-      window.BrightDreamersLazyImages.init(document.getElementById('main-content'));
+    var main = document.getElementById('main-content');
+    if (main && main.querySelector('img.lazy-img[data-src]')) {
+      window.BrightDreamersLazyImages.init(main);
     }
   }
 

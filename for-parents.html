@@ -119,14 +119,17 @@
           </div>
 
           <div class="about-hero__media">
-            <img
-              class="about-hero__banner"
-              src="assets/images/for-parents-hero-banner.png"
-              alt="A mother and daughter drawing together at a table with colored pencils"
-              width="1200"
-              height="900"
-              decoding="async"
-            />
+            <div class="lazy-img-wrap">
+              <img
+                class="about-hero__banner lazy-img"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                data-src="assets/images/for-parents-hero-banner.png"
+                alt="A mother and daughter drawing together at a table with colored pencils"
+                width="1200"
+                height="900"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -399,16 +402,18 @@
 
             <article class="for-parents-fit-card for-parents-fit-card--lavender">
               <div class="for-parents-fit-card__quote-layout">
-                <img
-                  class="for-parents-fit-card__jar"
-                  src="assets/images/for-parents-fit-jar.png"
-                  alt=""
-                  width="180"
-                  height="220"
-                  loading="lazy"
-                  decoding="async"
-                  aria-hidden="true"
-                />
+                <div class="lazy-img-wrap">
+                  <img
+                    class="for-parents-fit-card__jar lazy-img"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    data-src="assets/images/for-parents-fit-jar.png"
+                    alt=""
+                    width="180"
+                    height="220"
+                    decoding="async"
+                    aria-hidden="true"
+                  />
+                </div>
                 <p class="for-parents-fit-card__quote">
                   Children do not need to arrive with a polished talent or a perfect idea.
                   Curiosity, imagination, kindness, and a willingness to participate are wonderful
@@ -713,6 +718,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="assets/js/include.js"></script>
+    <script src="assets/js/lazy-images.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>

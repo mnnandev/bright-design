@@ -3168,6 +3168,11 @@ img.lazy-img.loaded {
   object-fit: contain;
 }
 
+.vision-together__jar-wrap > .lazy-img-wrap {
+  width: 100%;
+  max-width: var(--vision-together-jar-max);
+}
+
 .vision-together__stars {
   position: absolute;
   right: clamp(-0.15rem, 0.35vw, 0.35rem);
@@ -3735,6 +3740,17 @@ img.lazy-img.loaded {
   margin-bottom: clamp(0.7rem, 1vw, 0.9rem);
 }
 
+.partners-impact-card > .lazy-img-wrap--cover {
+  margin-bottom: clamp(0.7rem, 1vw, 0.9rem);
+  width: 100%;
+}
+
+.partners-impact-card > .lazy-img-wrap--cover .partners-impact-card__photo {
+  aspect-ratio: auto;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
 .partners-impact-card__title {
   font-family: var(--font-heading);
   font-weight: 700;
@@ -4098,6 +4114,12 @@ img.lazy-img.loaded {
   height: auto;
   object-fit: contain;
   justify-self: end;
+}
+
+.get-involved-impact__visual > .lazy-img-wrap {
+  justify-self: end;
+  width: 100%;
+  max-width: var(--get-involved-impact-illustration-max);
 }
 
 .get-involved-timeline {
@@ -4491,6 +4513,12 @@ img.lazy-img.loaded {
   height: auto;
   object-fit: contain;
   justify-self: center;
+}
+
+.for-parents-fit-card__quote-layout > .lazy-img-wrap {
+  justify-self: center;
+  width: 100%;
+  max-width: clamp(118px, 11vw, 158px);
 }
 
 .for-parents-fit-card__quote {
@@ -5088,6 +5116,16 @@ img.lazy-img.loaded {
   margin-bottom: clamp(0.55rem, 0.9vw, 0.75rem);
 }
 
+.explore-way-card > .lazy-img-wrap--cover {
+  margin-bottom: clamp(0.55rem, 0.9vw, 0.75rem);
+}
+
+.explore-way-card > .lazy-img-wrap--cover .explore-way-card__photo {
+  aspect-ratio: auto;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
 .explore-way-card__text {
   flex: 1 1 auto;
   font-family: var(--font-body);
@@ -5270,6 +5308,19 @@ img.lazy-img.loaded {
   background: transparent;
 }
 
+.explore-grow-stage__layout > .lazy-img-wrap {
+  justify-self: center;
+  align-self: center;
+  width: 100%;
+  max-width: var(--explore-grow-photo-max);
+}
+
+.explore-grow-stage__layout > .lazy-img-wrap .explore-grow-stage__photo {
+  justify-self: auto;
+  align-self: auto;
+  max-height: calc(var(--explore-grow-card-h) - 0.5rem);
+}
+
 .explore-grow-stage__body {
   min-width: 0;
   padding: clamp(0.15rem, 0.35vw, 0.35rem) clamp(0.1rem, 0.3vw, 0.25rem)
@@ -5439,6 +5490,16 @@ img.lazy-img.loaded {
   object-fit: cover;
   border-radius: var(--experience-photo-radius);
   margin-bottom: clamp(0.65rem, 1vw, 0.85rem);
+}
+
+.explore-impact-card > .lazy-img-wrap--cover {
+  margin-bottom: clamp(0.65rem, 1vw, 0.85rem);
+}
+
+.explore-impact-card > .lazy-img-wrap--cover .explore-impact-card__photo {
+  aspect-ratio: auto;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .explore-impact-card__title {
@@ -7469,8 +7530,25 @@ img.lazy-img.loaded {
   align-self: stretch;
   height: 100%;
   min-height: 100%;
-   
   display: block;
+}
+
+.compare-side > .lazy-img-wrap {
+  flex: 0 0 var(--compare-photo-share);
+  width: var(--compare-photo-share);
+  max-width: var(--compare-photo-share);
+  align-self: stretch;
+  height: 100%;
+  min-height: 100%;
+}
+
+.compare-side > .lazy-img-wrap .compare-side__photo {
+  flex: none;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 
 .compare-side--left .compare-side__photo {
@@ -9158,11 +9236,12 @@ img.lazy-img.loaded {
     overflow: hidden;
   }
 
-  .compare-side--right .compare-side__photo {
+  .compare-side--right > .lazy-img-wrap {
     order: -1;
   }
 
-  .compare-side__photo {
+  .compare-side__photo,
+  .compare-side > .lazy-img-wrap .compare-side__photo {
     flex: none;
     width: 100%;
     max-width: 100%;
@@ -9170,6 +9249,14 @@ img.lazy-img.loaded {
     min-height: 0;
     height: auto;
     object-fit: cover;
+  }
+
+  .compare-side > .lazy-img-wrap {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
   }
 
   .compare-side--left .compare-side__text,
@@ -11447,6 +11534,12 @@ img.lazy-img.loaded {
 .donation-hero__banner {
   position: relative;
   z-index: 1;
+}
+
+.donation-hero__media > .lazy-img-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
 .donation-hero__deco {
