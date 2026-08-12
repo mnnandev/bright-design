@@ -16,7 +16,7 @@
     <main id="main-content">
       <section class="newsletter-signup section-padding" aria-label="Newsletter sign up">
         <div class="site-container">
-          <div class="newsletter-layout card-shadow">
+          <div class="newsletter-layout">
             <div class="newsletter-info">
               <img
                 class="newsletter-info__heart-deco"
@@ -70,15 +70,17 @@
               </div>
 
               <figure class="newsletter-info__photo">
-                <img
-                  class="newsletter-info__photo-img"
-                  src="assets/images/Newsletter%20form/58c6acb1-3b0a-4c9b-966f-0bac6c54ed91.png"
-                  alt="Children coloring together at a table"
-                  width="640"
-                  height="420"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div class="lazy-img-wrap">
+                  <img
+                    class="newsletter-info__photo-img lazy-img"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                    data-src="assets/images/Newsletter%20form/58c6acb1-3b0a-4c9b-966f-0bac6c54ed91.png"
+                    alt="Children coloring together at a table"
+                    width="640"
+                    height="420"
+                    decoding="async"
+                  />
+                </div>
               </figure>
 
               <aside class="newsletter-privacy-box">
@@ -293,10 +295,81 @@
       </section>
     </main>
 
+    <div class="newsletter-success-modal" id="newsletter-success-modal" aria-hidden="true" hidden>
+      <div class="newsletter-success-modal__overlay" data-newsletter-success-close tabindex="-1"></div>
+      <div
+        class="newsletter-success-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="newsletter-success-title"
+      >
+        <button
+          class="newsletter-success-modal__close"
+          type="button"
+          data-newsletter-success-close
+          aria-label="Close success message"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+
+        <div class="newsletter-page-success" id="newsletter-page-success">
+          <img
+            class="newsletter-page-success__heart"
+            src="assets/images/Newsletter%20form/dfcc4104-0e61-43f8-81e6-0126494125e6-removebg-preview.png"
+            alt=""
+            width="52"
+            height="52"
+            decoding="async"
+            aria-hidden="true"
+          />
+          <h2 class="newsletter-page-success__title" id="newsletter-success-title">
+            You&rsquo;re subscribed! <span aria-hidden="true">💛</span>
+          </h2>
+          <p class="newsletter-page-success__lead">
+            Thank you for joining the Bright Dreamers community.
+          </p>
+          <p class="newsletter-page-success__text">
+            We&rsquo;ll keep you updated with inspiring stories, new experiences, volunteer and
+            partnership opportunities, and ways to support young ideas.
+          </p>
+          <p class="newsletter-page-success__tagline">Dream &bull; Create &bull; Grow &bull; Give</p>
+          <a class="btn btn--solid btn--lg btn-hover newsletter-page-success__btn" href="index.html">
+            Back to Home
+          </a>
+          <p class="newsletter-page-success__note">Welcome email sent automatically</p>
+        </div>
+      </div>
+    </div>
+
     <div id="footer"></div>
+
+    <script type="text/template" id="newsletter-welcome-email-template">
+Subject: Welcome to Bright Dreamers 💛
+
+Hi {{first_name}},
+
+Welcome to Bright Dreamers!
+
+Thank you for subscribing and becoming part of our growing community.
+
+From time to time, we'll share inspiring stories, new experiences and projects, volunteer and partnership opportunities, community highlights, and ways you can help young ideas grow.
+
+Bright Dreamers is a place where children are encouraged to dream, create, explore their ideas, and turn them into meaningful real-world experiences.
+
+We're happy to have you with us.
+
+Dream • Create • Grow • Give
+
+Bright Dreamers
+
+You can unsubscribe from our emails at any time using the unsubscribe link at the bottom of each message.
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="assets/js/include.js"></script>
+    <script src="assets/js/lazy-images.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>

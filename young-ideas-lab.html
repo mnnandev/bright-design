@@ -87,14 +87,17 @@
             </div>
 
             <div class="creative-makers-hero__media">
-              <img
-                class="creative-makers-hero__banner"
-                src="assets/images/young-ideas-lab-hero-banner.jpeg"
-                alt="Two children working together on a science and engineering project"
-                width="1200"
-                height="720"
-                decoding="async"
-              />
+              <div class="lazy-img-wrap">
+                <img
+                  class="creative-makers-hero__banner lazy-img"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  data-src="assets/images/young-ideas-lab-hero-banner.jpeg"
+                  alt="Two children working together on a science and engineering project"
+                  width="1200"
+                  height="720"
+                  decoding="async"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -438,6 +441,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="assets/js/include.js"></script>
+    <script src="assets/js/lazy-images.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>

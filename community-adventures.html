@@ -78,14 +78,17 @@
             </div>
 
             <div class="creative-makers-hero__media">
-              <img
-                class="creative-makers-hero__banner"
-                src="assets/images/community-adventures-hero-banner.png"
-                alt="Children exploring outdoors and discovering their community together"
-                width="1200"
-                height="720"
-                decoding="async"
-              />
+              <div class="lazy-img-wrap">
+                <img
+                  class="creative-makers-hero__banner lazy-img"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  data-src="assets/images/community-adventures-hero-banner.png"
+                  alt="Children exploring outdoors and discovering their community together"
+                  width="1200"
+                  height="720"
+                  decoding="async"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -429,6 +432,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="assets/js/include.js"></script>
+    <script src="assets/js/lazy-images.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>

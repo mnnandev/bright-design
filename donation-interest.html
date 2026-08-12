@@ -44,14 +44,17 @@
           </div>
 
           <div class="about-hero__media donation-hero__media">
-            <img
-              class="about-hero__banner apply-hero__banner donation-hero__banner"
-              src="assets/images/Donation-form/6e8303fc-5fad-48ca-8f95-71edb4eca60e.png"
-              alt="Children smiling and holding a handmade Thank You sign"
-              width="1200"
-              height="900"
-              decoding="async"
-            />
+            <div class="lazy-img-wrap">
+              <img
+                class="about-hero__banner apply-hero__banner donation-hero__banner lazy-img"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                data-src="assets/images/Donation-form/6e8303fc-5fad-48ca-8f95-71edb4eca60e.png"
+                alt="Children smiling and holding a handmade Thank You sign"
+                width="1200"
+                height="900"
+                decoding="async"
+              />
+            </div>
             <img
               class="donation-hero__deco donation-hero__deco--heart"
               src="assets/images/Donation-form/9ecad208-53d6-4f8d-9b21-177c62312ade-removebg-preview.png"
@@ -78,7 +81,7 @@
         <div class="site-container apply-form__inner">
           <div class="apply-form__main">
             <form class="apply-form__form donation-form" id="donation-interest-form" action="#" method="post">
-              <div class="donation-form-card card-shadow">
+              <div class="donation-form-card">
                 <header class="donation-form-card__head">
                   <img
                     class="donation-form-card__head-icon"
@@ -301,21 +304,22 @@
         </div>
       </section>
 
-      <section class="donation-footer-note section-padding" aria-label="Thank you">
+      <section class="donation-footer-note section-padding scroll-rise" aria-label="Thank you">
         <div class="site-container donation-footer-note__inner">
           <p class="donation-footer-note__text">
             Thank you! Your kindness helps us create brighter futures for children.
           </p>
-          <img
-            class="donation-footer-note__deco"
-            src="assets/images/Donation-form/bbc4d215-f3b4-408a-871d-6c0a3b87d527-removebg-preview.png"
-            alt=""
-            width="420"
-            height="80"
-            loading="lazy"
-            decoding="async"
-            aria-hidden="true"
-          />
+          <div class="donation-footer-note__trail" aria-hidden="true">
+            <img
+              class="donation-footer-note__deco"
+              src="assets/images/Donation-form/bbc4d215-f3b4-408a-871d-6c0a3b87d527-removebg-preview.png"
+              alt=""
+              width="640"
+              height="120"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
       </section>
     </main>
@@ -324,6 +328,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="assets/js/include.js"></script>
+    <script src="assets/js/lazy-images.js"></script>
     <script src="assets/js/main.js"></script>
     <script>
       (function () {

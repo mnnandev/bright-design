@@ -37,7 +37,7 @@
     el.parentNode.replaceChild(frag, el);
   }
 
-  function loadPartial(file, selector) {
+  function loadPartial(file, selector, mode) {
     return fetch(resolveIncludePath(file))
       .then(function (res) {
         if (!res.ok) {
@@ -46,6 +46,23 @@
         return res.text();
       })
       .then(function (html) {
+        if (mode === 'append') {
+          var target = document.querySelector(selector) || document.body;
+          var temp = document.createElement('div');
+          temp.innerHTML = html;
+
+          Array.prototype.slice
+            .call(temp.querySelectorAll('link[rel], style'))
+            .forEach(function (node) {
+              document.head.appendChild(node);
+            });
+
+          while (temp.firstChild) {
+            target.appendChild(temp.firstChild);
+          }
+          return;
+        }
+
         inject(selector, html);
       });
   }
