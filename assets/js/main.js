@@ -192,16 +192,11 @@
     function updateSidebarPosition() {
       if (!$main.length || !$sidebar.length || !$panel.length) return;
 
-      if (desktopMq.matches) {
-        resetSidebarPosition();
-        return;
-      }
-
       var scrollTop = $(window).scrollTop();
       var mainTop = $main.offset().top;
       var mainHeight = $main.outerHeight();
       var panelHeight = $panel.outerHeight();
-      var top = sidebarMetrics.top;
+      var top = desktopMq.matches ? readStickyTop() : sidebarMetrics.top;
       var startFix = desktopMq.matches
         ? mainTop - top
         : sidebarMetrics.naturalTop - top;
@@ -242,10 +237,7 @@
         left: desktopMq.matches ? sidebarMetrics.left : 0,
         right: desktopMq.matches ? '' : 0,
       });
-
-      if (!desktopMq.matches) {
-        $sidebar.css('min-height', panelHeight);
-      }
+      $sidebar.css('min-height', panelHeight);
     }
 
     function refreshSidebarLayout() {
@@ -389,6 +381,105 @@
     }
   }
 
+  function initApplyFormSidebar() {
+    var $main = $('.apply-form').first();
+    var $sidebar = $main.find('.apply-form__sidebar').first();
+    if (!$main.length || !$sidebar.length) return;
+
+    if (!$sidebar.children('.apply-form__sidebar-sticky').length) {
+      $sidebar.wrapInner('<div class="apply-form__sidebar-sticky"></div>');
+    }
+
+    var $panel = $sidebar.find('.apply-form__sidebar-sticky').first();
+    var $content = $main.find('.apply-form__main').first();
+    var desktopMq = window.matchMedia('(min-width: 1025px)');
+    var sidebarMetrics = {
+      width: 0,
+      left: 0,
+      top: 32,
+    };
+
+    function readStickyTop() {
+      return Math.round(Math.min(Math.max(window.innerWidth * 0.025, 20), 32));
+    }
+
+    function resetSidebarPosition() {
+      $sidebar.removeClass('is-fixed is-at-bottom');
+      $panel.css({ width: '', left: '', right: '' });
+      $sidebar.css('min-height', '');
+    }
+
+    function measureSidebar() {
+      resetSidebarPosition();
+      if (!desktopMq.matches) return;
+
+      sidebarMetrics.top = readStickyTop();
+      sidebarMetrics.width = $sidebar.outerWidth();
+      sidebarMetrics.left = $sidebar.offset().left;
+    }
+
+    function updateSidebarPosition() {
+      if (!$panel.length) return;
+
+      if (!desktopMq.matches) {
+        resetSidebarPosition();
+        return;
+      }
+
+      var scrollTop = $(window).scrollTop();
+      var mainTop = $main.offset().top;
+      var mainHeight = $main.outerHeight();
+      var panelHeight = $panel.outerHeight();
+      var top = readStickyTop();
+      var startFix = mainTop - top;
+      var endFix = mainTop + mainHeight - panelHeight - top;
+
+      if (scrollTop <= startFix) {
+        resetSidebarPosition();
+        return;
+      }
+
+      if (scrollTop >= endFix) {
+        $sidebar.removeClass('is-fixed').addClass('is-at-bottom');
+        $panel.css({
+          width: sidebarMetrics.width,
+          left: '',
+          right: '',
+        });
+        $sidebar.css('min-height', $content.outerHeight());
+        return;
+      }
+
+      $sidebar.addClass('is-fixed').removeClass('is-at-bottom');
+      $panel.css({
+        width: sidebarMetrics.width,
+        left: sidebarMetrics.left,
+        right: '',
+      });
+      $sidebar.css('min-height', panelHeight);
+    }
+
+    function refreshSidebarLayout() {
+      measureSidebar();
+      updateSidebarPosition();
+    }
+
+    refreshSidebarLayout();
+
+    $main.find('img').on('load.applyFormSidebar', function () {
+      refreshSidebarLayout();
+    });
+
+    $(window).on('scroll.applyFormSidebar', updateSidebarPosition);
+    $(window).on('resize.applyFormSidebar load.applyFormSidebar', refreshSidebarLayout);
+
+    if (typeof desktopMq.addEventListener === 'function') {
+      desktopMq.addEventListener('change', refreshSidebarLayout);
+    } else if (typeof desktopMq.addListener === 'function') {
+      desktopMq.addListener(refreshSidebarLayout);
+    }
+  }
+
   function initApplySelects() {
     $('[data-apply-select]').each(function () {
       var $wrap = $(this);
@@ -498,7 +589,7 @@
 
     if (animatePages.indexOf(current) === -1) return;
 
-    $('#main-content > section:not(.page-hero)').each(function (index) {
+    $('#main-content > section:not(.page-hero):not(.media-policy-main):not(.apply-form)').each(function (index) {
       var $section = $(this);
       if ($section.hasClass('scroll-rise')) return;
       $section.addClass('scroll-rise');
@@ -574,14 +665,105 @@
     });
   }
 
+  function initNewsletterSignupPage() {
+    var $page = $('.newsletter-signup-page');
+    if (!$page.length) return;
+
+    var $form = $('#newsletter-signup-form');
+    var modal = document.getElementById('newsletter-success-modal');
+    if (!$form.length || !modal) return;
+
+    function firstNameFrom(value) {
+      var trimmed = String(value || '').trim();
+      if (!trimmed) return 'Friend';
+      return trimmed.split(/\s+/)[0];
+    }
+
+    function buildWelcomeEmail(name) {
+      var template = document.getElementById('newsletter-welcome-email-template');
+      if (!template) return '';
+      return template.textContent.replace(/\{\{first_name\}\}/g, name);
+    }
+
+    function openSuccessModal() {
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.remove('is-open');
+      $('body').addClass('newsletter-success-open');
+
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          modal.classList.add('is-open');
+        });
+      });
+
+      window.setTimeout(function () {
+        var btn = modal.querySelector('.newsletter-page-success__btn');
+        if (btn) btn.focus();
+      }, 420);
+    }
+
+    function closeSuccessModal() {
+      modal.classList.remove('is-open');
+      $('body').removeClass('newsletter-success-open');
+
+      window.setTimeout(function () {
+        modal.hidden = true;
+        modal.setAttribute('aria-hidden', 'true');
+      }, 280);
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var emailParam = params.get('email');
+    if (emailParam) {
+      $form.find('input[name="email"]').val(emailParam);
+    }
+
+    $form.on('submit', function (event) {
+      event.preventDefault();
+
+      if (!this.checkValidity()) {
+        this.reportValidity();
+        return;
+      }
+
+      var fullName = $form.find('input[name="full_name"]').val() || '';
+      buildWelcomeEmail(firstNameFrom(fullName));
+      openSuccessModal();
+    });
+
+    $(modal).on('click', '[data-newsletter-success-close]', function () {
+      closeSuccessModal();
+    });
+
+    $(document).on('keydown.newsletterSuccess', function (event) {
+      if (event.key === 'Escape' && !modal.hidden) {
+        closeSuccessModal();
+      }
+    });
+  }
+
   function init() {
     initMobileMenu();
     initNavActiveState();
     initApplySelects();
     initFaqPage();
     initMediaPolicyPage();
+    initApplyFormSidebar();
     initMediaConsentDateFields();
+    initNewsletterSignupPage();
+    initHomeLazyImages();
     initScrollReveal();
+  }
+
+  function initHomeLazyImages() {
+    if (!$('.home-page').length) {
+      return;
+    }
+
+    if (window.BrightDreamersLazyImages) {
+      window.BrightDreamersLazyImages.init(document.getElementById('main-content'));
+    }
   }
 
   function whenIncludesReady(callback) {
