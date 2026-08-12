@@ -115,6 +115,16 @@
   --home-pillar-img-filter: var(--logo-bg-filter);
   --home-section-icon-filter: var(--home-pillar-img-filter);
   --home-reality-bg: #fff5f8;
+  --home-reality-glow-dream: rgba(238, 29, 120, 0.2);
+  --home-reality-glow-imagine: rgba(139, 92, 246, 0.2);
+  --home-reality-glow-create: rgba(255, 159, 28, 0.22);
+  --home-reality-glow-share: rgba(43, 127, 212, 0.2);
+  --home-reality-glow-help: rgba(61, 154, 90, 0.2);
+  --home-reality-glow-celebrate: rgba(238, 29, 120, 0.18);
+  --home-reality-icon-size: clamp(64px, 6.5vw, 88px);
+  --home-reality-icon-inner: 100%;
+  --home-reality-deco-image-width: 80%;
+  --home-reality-inner-pad-x: clamp(4rem, 9vw, 7rem);
   --home-different-divider: rgba(0, 27, 102, 0.1);
   --home-explore-bg: #fdf8f8;
   --experience-card-radius: 16px;
@@ -1563,31 +1573,38 @@ button {
   overflow: hidden;
 }
 
-.home-reality__deco {
+.home-reality__deco-wrap {
   position: absolute;
   top: 50%;
-  width: clamp(70px, 7vw, 110px);
-  height: auto;
-  object-fit: contain;
+  transform: translateY(-50%);
+  width: var(--home-reality-inner-pad-x);
+  display: flex;
+  justify-content: center;
   pointer-events: none;
   user-select: none;
-  opacity: 0.85;
   z-index: 0;
 }
 
-.home-reality__deco--left {
-  left: clamp(0.35rem, 1vw, 0.85rem);
-  transform: translateY(-50%);
+.home-reality__deco-wrap--left {
+  left: 0;
 }
 
-.home-reality__deco--right {
-  right: clamp(0.35rem, 1vw, 0.85rem);
-  transform: translateY(-50%) scaleX(-1);
+.home-reality__deco-wrap--right {
+  right: 0;
+}
+
+.home-reality__deco {
+  display: block;
+  width: var(--home-reality-deco-image-width);
+  height: auto;
+  object-fit: contain;
+  opacity: 1;
 }
 
 .home-reality__inner {
   position: relative;
   z-index: 1;
+  padding-inline: var(--home-reality-inner-pad-x);
 }
 
 .home-reality__title {
@@ -1615,7 +1632,7 @@ button {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: clamp(0.1rem, 0.25vw, 0.2rem);
+  gap: clamp(0.15rem, 0.45vw, 0.35rem);
 }
 
 .home-reality-step {
@@ -1625,29 +1642,37 @@ button {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.35rem;
+  gap: 0.45rem;
 }
 
 .home-reality-step__icon-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(52px, 5.2vw, 68px);
-  height: clamp(52px, 5.2vw, 68px);
-  background-color: var(--home-reality-bg);
+  width: var(--home-reality-icon-size);
+  height: var(--home-reality-icon-size);
   line-height: 0;
   border-radius: 50%;
-  overflow: hidden;
+  overflow: visible;
   isolation: isolate;
+}
+
+.home-reality-step__icon-wrap--dream,
+.home-reality-step__icon-wrap--imagine,
+.home-reality-step__icon-wrap--create,
+.home-reality-step__icon-wrap--share,
+.home-reality-step__icon-wrap--help,
+.home-reality-step__icon-wrap--celebrate {
+  background: none;
 }
 
 .home-reality-step__icon {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: var(--home-reality-icon-inner);
+  height: var(--home-reality-icon-inner);
   object-fit: contain;
-  filter: var(--home-section-icon-filter);
-  mix-blend-mode: multiply;
+  filter: none;
+  mix-blend-mode: normal;
 }
 
 .home-reality-step__title {
@@ -1686,10 +1711,10 @@ button {
   font-family: var(--font-body);
   font-size: clamp(0.78rem, 0.88vw, 0.88rem);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.45;
   color: var(--color-navy);
   margin: 0;
-  max-width: 10.5rem;
+  max-width: 11rem;
 }
 
 .home-reality-step__arrow {
@@ -1698,7 +1723,8 @@ button {
   width: var(--approach-arrow-width);
   height: auto;
   object-fit: contain;
-  margin-top: calc(clamp(52px, 5.2vw, 68px) * 0.34);
+  margin-top: calc(var(--home-reality-icon-size) * 0.34);
+  opacity: 0.85;
 }
 
 /* ——— Home explore (4 experience cards) ——— */
@@ -6893,7 +6919,7 @@ button {
 
 .we-believe__deco {
   flex: 0 0 auto;
-  width: clamp(44px, 4.5vw, 72px);
+  width: clamp(52px, 5.2vw, 80px);
   height: auto;
   object-fit: contain;
   pointer-events: none;
@@ -6901,7 +6927,7 @@ button {
 }
 
 .we-believe__deco--right {
-  transform: scaleX(-1);
+  transform: none;
 }
 
 .we-believe__slider {
@@ -8008,7 +8034,11 @@ button {
     border-left: 1px solid var(--home-different-divider);
   }
 
-  .home-reality__deco {
+  .home-reality__inner {
+    padding-inline: clamp(1rem, 1.8vw, 1.45rem);
+  }
+
+  .home-reality__deco-wrap {
     display: none;
   }
 
