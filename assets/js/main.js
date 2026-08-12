@@ -134,16 +134,16 @@
   }
 
   function initMediaPolicyPage() {
-    var $page = $('.media-policy-page');
+    var $page = $('.media-policy-page, .privacy-policy-page').first();
     if (!$page.length) return;
 
-    var $navLinks = $('.media-policy-nav__link');
-    var $navList = $('.media-policy-nav__list');
-    var $sections = $('[data-media-section]');
-    var $main = $('.media-policy-main');
-    var $sidebar = $('.media-policy-sidebar');
-    var $panel = $('.media-policy-sidebar__sticky');
-    var $content = $('.media-policy-content');
+    var $navLinks = $page.find('.media-policy-nav__link');
+    var $navList = $page.find('.media-policy-nav__list');
+    var $sections = $page.find('[data-media-section]');
+    var $main = $page.find('.media-policy-main');
+    var $sidebar = $page.find('.media-policy-sidebar');
+    var $panel = $page.find('.media-policy-sidebar__sticky');
+    var $content = $page.find('.media-policy-content');
     var desktopMq = window.matchMedia('(min-width: 1025px)');
     var observer;
     var sectionVisibility = {};
@@ -178,7 +178,7 @@
         sidebarMetrics.top = readStickyTop();
         sidebarMetrics.width = $sidebar.outerWidth();
         sidebarMetrics.left = $sidebar.offset().left;
-        $sidebar.css('min-height', $content.outerHeight());
+        $sidebar.css('min-height', '');
         sidebarMetrics.naturalTop = 0;
         return;
       }
@@ -191,6 +191,11 @@
 
     function updateSidebarPosition() {
       if (!$main.length || !$sidebar.length || !$panel.length) return;
+
+      if (desktopMq.matches) {
+        resetSidebarPosition();
+        return;
+      }
 
       var scrollTop = $(window).scrollTop();
       var mainTop = $main.offset().top;
@@ -355,6 +360,11 @@
     refreshSidebarLayout();
     resolveActiveSectionFromScroll();
 
+    /* Re-measure after images load (sidebar card icon, etc.) */
+    $page.find('img').on('load.mediaPolicySidebar', function () {
+      refreshSidebarLayout();
+    });
+
     $(window).on('scroll.mediaPolicySidebar', function () {
       updateSidebarPosition();
       if (!desktopMq.matches) {
@@ -479,6 +489,10 @@
       'community-adventures',
       'for-parents',
       'our-vision',
+      'accessibility',
+      'financial-transparency',
+      'terms',
+      'privacy-policy',
     ];
     var current = pageSlug(window.location.pathname);
 
