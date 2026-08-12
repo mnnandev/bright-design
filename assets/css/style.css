@@ -278,7 +278,7 @@
   --vision-pillar-orange-bg: #fff8ef;
   --vision-pillar-icon-size: clamp(56px, 5vw, 72px);
   --vision-pillar-purpose-icon-extra: 5px;
-  --vision-pillar-deco-size: clamp(14px, 1.35vw, 18px);
+  --vision-pillar-deco-size: 40px;
   --vision-pillar-text-lines: 5;
   --vision-roadmap-goals-col: 0.42fr;
   --vision-roadmap-journey-col: 0.58fr;
@@ -288,11 +288,13 @@
   --vision-journey-step-quote-size: clamp(0.78rem, 0.86vw, 0.88rem);
   --vision-journey-step-text-size: clamp(0.74rem, 0.82vw, 0.82rem);
   --vision-moments-bg: var(--believe-card-peach);
-  --vision-moments-card-col: 0.3fr;
-  --vision-moments-gallery-col: 0.7fr;
-  --vision-moments-photo-col: 0.72fr;
-  --vision-moments-feature-col: 2.55fr;
-  --vision-moments-gallery-max-h: clamp(220px, 22vw, 310px);
+  --vision-moments-card-col: 0.28fr;
+  --vision-moments-gallery-col: 0.72fr;
+  --vision-moments-photo-col: 0.15fr;
+  --vision-moments-feature-col: 0.54fr;
+  --vision-moments-duo-col: 0.31fr;
+  --vision-moments-gallery-h: auto;
+  --vision-moments-feature-aspect: 900 / 400;
   --vision-moments-feature-copy-width: min(56%, 13.5rem);
   --vision-moments-feature-title-size: clamp(0.82rem, 0.92vw, 0.98rem);
   --vision-moments-feature-text-size: clamp(0.66rem, 0.74vw, 0.76rem);
@@ -2803,7 +2805,7 @@ button {
   display: grid;
   grid-template-columns: minmax(0, var(--vision-moments-card-col))
     minmax(0, var(--vision-moments-gallery-col));
-  align-items: center;
+  align-items: stretch;
   gap: clamp(0.55rem, 1vw, 0.85rem);
 }
 
@@ -2812,7 +2814,6 @@ button {
   border-radius: var(--home-pillar-radius);
   padding: clamp(1rem, 1.55vw, 1.35rem) clamp(0.85rem, 1.25vw, 1.05rem);
   min-width: 0;
-  align-self: stretch;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2851,6 +2852,10 @@ button {
   color: var(--color-navy);
 }
 
+.vision-moments__list-more {
+  grid-column: 2;
+}
+
 .vision-moments__check {
   display: inline-flex;
   align-items: center;
@@ -2865,33 +2870,49 @@ button {
 }
 
 .vision-moments__gallery {
-  min-width: 0;
-}
-
-.vision-moments__photos {
   display: grid;
   grid-template-columns:
     minmax(0, var(--vision-moments-photo-col)) minmax(0, var(--vision-moments-feature-col))
-    minmax(0, var(--vision-moments-photo-col)) minmax(0, var(--vision-moments-photo-col));
+    minmax(0, var(--vision-moments-duo-col));
   gap: clamp(0.35rem, 0.65vw, 0.55rem);
-  align-items: center;
-  width: 100%;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.vision-moments__photo-duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.35rem, 0.65vw, 0.55rem);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  align-self: stretch;
+}
+
+.vision-moments__photo-duo .vision-moments__photo-wrap {
+  height: 100%;
+  min-height: 0;
 }
 
 .vision-moments__photo-wrap {
   margin: 0;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--home-pillar-radius);
+  align-self: stretch;
 }
 
 .vision-moments__photo {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: var(--vision-moments-gallery-max-h);
-  object-fit: contain;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center;
   border-radius: var(--home-pillar-radius);
 }
 
@@ -2899,24 +2920,29 @@ button {
   position: relative;
   margin: 0;
   min-width: 0;
+  width: 100%;
+  aspect-ratio: var(--vision-moments-feature-aspect);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  border-radius: var(--home-pillar-radius);
+  align-self: stretch;
 }
 
 .vision-moments__feature-inner {
   position: relative;
   display: block;
   width: 100%;
-  max-width: 100%;
+  height: 100%;
 }
 
 .vision-moments__feature-img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: var(--vision-moments-gallery-max-h);
+  height: 100%;
   object-fit: contain;
+  object-position: center;
   border-radius: var(--home-pillar-radius);
 }
 
@@ -4833,7 +4859,6 @@ button {
   object-position: center;
   pointer-events: none;
   user-select: none;
-  mix-blend-mode: multiply;
 }
 
 .explore-hero__title-line {
@@ -8607,7 +8632,11 @@ button {
     gap: clamp(0.85rem, 2vw, 1.1rem);
   }
 
-  .vision-moments__photos {
+  .vision-moments__card {
+    min-height: 0;
+  }
+
+  .vision-moments__gallery {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -8620,29 +8649,45 @@ button {
     padding-bottom: 0.35rem;
     margin-inline: calc(-1 * var(--container-padding));
     padding-inline: var(--container-padding);
-    align-items: center;
+    align-items: stretch;
   }
 
-  .vision-moments__photos::-webkit-scrollbar {
+  .vision-moments__gallery::-webkit-scrollbar {
     display: none;
   }
 
   .vision-moments__photo-wrap {
     flex: 0 0 min(128px, 36vw);
     scroll-snap-align: start;
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 
   .vision-moments__photo {
-    max-height: clamp(165px, 42vw, 195px);
+    height: 100%;
   }
 
   .vision-moments__feature {
     flex: 0 0 min(230px, 58vw);
     scroll-snap-align: start;
+    height: auto;
+    aspect-ratio: var(--vision-moments-feature-aspect);
   }
 
-  .vision-moments__feature-img {
-    max-height: clamp(165px, 42vw, 195px);
+  .vision-moments__photo-duo {
+    flex: 0 0 min(210px, 52vw);
+    scroll-snap-align: start;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vision-moments__photo-duo .vision-moments__photo-wrap {
+    flex: none;
+    width: auto;
+    height: 100%;
+    aspect-ratio: auto;
   }
 
   .vision-moments__feature-copy {
@@ -8661,6 +8706,10 @@ button {
 
   .vision-moments__list {
     grid-template-columns: 1fr;
+  }
+
+  .vision-moments__list-more {
+    grid-column: auto;
   }
 
   .vision-partner__inner {
