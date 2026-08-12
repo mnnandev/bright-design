@@ -79,6 +79,8 @@
   --footer-newsletter-shell-height: 48px;
   --header-pad-y: 10px;
   --header-logo-height: clamp(72px, 5.5vw, 92px);
+  --header-logo-box-width: clamp(240px, 16vw, 300px);
+  --header-logo-width-pct: 80%;
   --hero-pad-y: 0;
   --about-hero-pad-top: 30px;
   --home-hero-logo-width: 380px;
@@ -953,6 +955,21 @@ button {
   height: var(--header-logo-height);
   object-fit: contain;
   filter: var(--logo-bg-filter);
+}
+
+@media (min-width: 1025px) {
+  .site-header__logo {
+    width: var(--header-logo-box-width);
+  }
+
+  .site-header__logo img {
+    width: var(--header-logo-width-pct);
+    height: auto;
+  }
+
+  .site-header__inner {
+    min-height: calc(var(--header-logo-box-width) * 0.8 * 0.3 + var(--header-pad-y) * 2);
+  }
 }
 
 .site-nav {
@@ -7805,6 +7822,7 @@ img.lazy-img.loaded {
   }
 
   .site-header__logo img {
+    width: auto;
     --header-logo-height: 56px;
   }
 
@@ -9475,6 +9493,7 @@ img.lazy-img.loaded {
   }
 
   .site-header__logo img {
+    width: auto;
     --header-logo-height: 52px;
   }
 
