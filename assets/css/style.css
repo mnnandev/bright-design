@@ -2574,6 +2574,7 @@ img.lazy-img.loaded {
   width: var(--vision-pillar-deco-size);
   height: var(--vision-pillar-deco-size);
   pointer-events: none;
+  object-fit: contain;
 }
 
 .vision-pillar-card--pink .vision-pillar-card__deco {
